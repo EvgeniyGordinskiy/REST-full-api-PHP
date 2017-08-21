@@ -1,8 +1,5 @@
-
 .gitignore
-.idea/REST-full-api-PHP.iml
-.idea/modules.xml
-.idea/workspace.xml
+.idea/
 composer.lock
 Would skip repository vendor/symfony/var-dumper
 vendor/symfony/yaml
