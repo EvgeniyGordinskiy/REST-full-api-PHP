@@ -3,8 +3,9 @@ namespace App\v1;
 
 use Services\DB;
 use Services\Request;
-class User{
 
+class User
+{
     private $request;
 
     public function __construct (){
@@ -15,7 +16,6 @@ class User{
              }
              if($this->request->classMethod){
                  $params = [];
-
                  if(isset($this->request->parameters['method2'])){
                      $params[] = $this->request->parameters['method2'];
                  }
@@ -26,7 +26,7 @@ class User{
 
     }
 
-    public function index( $id=0){
+    public function index($id=0){
         if(is_numeric($id)){
             $sql = "SELECT * FROM users WHERE id = ".$id;
             $result = (new DB())->get($sql);
