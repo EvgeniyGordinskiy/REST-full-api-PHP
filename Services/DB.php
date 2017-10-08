@@ -2,8 +2,9 @@
 namespace Services;
 
 use PDO;
+use Facades/BaseDB;
 
-class DB {
+class DB extends BaseDB {
 
     private $connection;
 
@@ -35,5 +36,9 @@ class DB {
             return $stmt->fetchAll();
         }
         return false;
+    }
+
+    public function put(){
+        
     }
 }
