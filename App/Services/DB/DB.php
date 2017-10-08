@@ -2,7 +2,7 @@
 namespace Services;
 
 use PDO;
-use Facades/BaseDB;
+use Services\DB\BaseDB;
 
 class DB extends BaseDB {
 

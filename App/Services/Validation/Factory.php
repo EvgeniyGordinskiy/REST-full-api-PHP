@@ -1,6 +1,6 @@
 <?php
 
-namespace Services\Facades\Factory;
+namespace App\Services\Validation;
 
 interface Factory 
 {
@@ -12,7 +12,6 @@ interface Factory
      * @param  array  $rules
      * @param  array  $messages
      * @param  array  $customAttributes
-     * @return \Illuminate\Contracts\Validation\Validator
      */
 	paubli function make(array $data, array $rules, array $messages = [], array $customAttributes = []);
 
