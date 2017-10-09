@@ -1,5 +1,5 @@
 <?php
-namespace Services;
+namespace App\Services\Http\Request;
 
 class Request{
     public $headers = [];

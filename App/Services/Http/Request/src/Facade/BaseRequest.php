@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Services\Request;
+namespace App\Services\Http\Request;
 
-interface RequestInterface
+use \Exception\ConflictingHeadersException;
+
+class BaseRequest extends ConflictingHeadersException
 {
     /**
      * RequestInterface constructor.
@@ -15,17 +17,17 @@ interface RequestInterface
      * @param null $content
      */
     public function __construct(
-        array $query = array(), 
-        array $request = array(), 
-        array $attributes = array(), 
-        array $cookies = array(), 
-        array $files = array(), 
-        array $server = array(), 
+        array $query = array(),
+        array $request = array(),
+        array $attributes = array(),
+        array $cookies = array(),
+        array $files = array(),
+        array $server = array(),
         $content = null);
 
     /**
      * Sets the parameters for this request.
-     * 
+     *
      * @param array $query
      * @param array $request
      * @param array $attributes
@@ -36,15 +38,11 @@ interface RequestInterface
      * @return mixed
      */
     public function initialize(
-        array $query = array(), 
-        array $request = array(), 
-        array $attributes = array(), 
-        array $cookies = array(), 
-        array $files = array(), 
-        array $server = array(), 
+        array $query = array(),
+        array $request = array(),
+        array $attributes = array(),
+        array $cookies = array(),
+        array $files = array(),
+        array $server = array(),
         $content = null);
-
-    
-    
-    
 }
