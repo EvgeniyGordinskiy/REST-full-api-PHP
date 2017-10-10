@@ -3,7 +3,7 @@
 namespace App\Services\Http;
 
 
-class HttpQuery 
+class Http
 {
     protected $headers = [];
     

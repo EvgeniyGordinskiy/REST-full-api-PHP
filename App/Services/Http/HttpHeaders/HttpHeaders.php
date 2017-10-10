@@ -4,7 +4,7 @@ namespace App\Services\Http;
 
 class HttpHeaders implements HttpHeadersInterface
 {
-    protected $headers = [];
+    protected $parameters = [];
     
     /**
      * Constructor.
@@ -13,7 +13,7 @@ class HttpHeaders implements HttpHeadersInterface
     public function __construct()
     {
         foreach ($_SERVER as $header => $value) {
-            $this->headers[$header] = $value;
+            $this->parameters[$header] = $value;
         }
     }
 

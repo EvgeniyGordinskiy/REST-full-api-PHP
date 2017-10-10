@@ -4,7 +4,7 @@ namespace App\Services\Http\Request;
 
 use \Exception\ConflictingHeadersException;
 
-class BaseRequest extends ConflictingHeadersException
+class RequestFacade extends ConflictingHeadersException
 {
     /**
      * RequestInterface constructor.
