@@ -3,6 +3,7 @@
 namespace App\Services\Http\Request;
 
 use \Exception\ConflictingHeadersException;
+use App\Services\Http\Request\RequestsFiles;
 
 class RequestFacade extends ConflictingHeadersException
 {
@@ -23,7 +24,11 @@ class RequestFacade extends ConflictingHeadersException
         array $cookies = array(),
         array $files = array(),
         array $server = array(),
-        $content = null);
+        $content = null)
+    {
+        
+        $this->initialize();
+    }
 
     /**
      * Sets the parameters for this request.
@@ -44,5 +49,12 @@ class RequestFacade extends ConflictingHeadersException
         array $cookies = array(),
         array $files = array(),
         array $server = array(),
-        $content = null);
+        $content = null)
+    {
+        $this->query = $_GET;
+        $this->request = $_POST;
+        $this->attributes = new RequestsParameters();
+        $this->cookies = $_COOKIE;
+        $this->files = new RequestsFiles();
+    }
 }
