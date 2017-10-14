@@ -4,7 +4,7 @@ namespace App\Services\Http;
 
 class HttpHeaders implements HttpHeadersInterface
 {
-    protected $parameters = [];
+    protected $headers = [];
     
     /**
      * Constructor.
@@ -13,31 +13,7 @@ class HttpHeaders implements HttpHeadersInterface
     public function __construct()
     {
         foreach ($_SERVER as $header => $value) {
-            $this->parameters[$header] = $value;
-        }
-    }
-
-    /**
-     * Sets a header by name.
-     *
-     * @param string       $key     The key
-     * @param string|array $values  The value or an array of values
-     * @param bool         $replace Whether to replace the actual value or not (true by default)
-     */
-    public function set($header, $values, $replace = true)
-    {
-        $header = str_replace('_', '-', strtolower($header));
-
-        $values = array_values((array) $values);
-
-        if (true === $replace || !isset($this->headers[$header])) {
-            $this->headers[$header] = $values;
-        } else {
-            $this->headers[$header] = array_merge($this->headers[$header], $values);
-        }
-
-        if ('cache-control' === $header) {
-            $this->cacheControl = $this->parseCacheControl($values[0]);
+            $this->headers[strtolower($header)] = $value;
         }
     }
 
@@ -52,7 +28,7 @@ class HttpHeaders implements HttpHeadersInterface
      */
     public function get($header, $default = null, $first = true)
     {
-        $header = str_replace('_', '-', strtolower($header));
+        $header = str_replace('-', '_', strtolower($header));
 
         if (!array_key_exists($header, $this->headers)) {
             if (null === $default) {
@@ -78,7 +54,7 @@ class HttpHeaders implements HttpHeadersInterface
      */
     public function has($header)
     {
-        return array_key_exists(str_replace('_', '-', strtolower($header)), $this->headers);
+        return array_key_exists(str_replace('-', '_', strtolower($header)), $this->headers);
     }
 
     /**
