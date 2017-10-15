@@ -2,12 +2,21 @@
 
 namespace App\Services\Http\Files\src;
 
+use App\Services\Exceptions\FileException;
+
 class Files
 {
     private $files = [];
+    protected $file_name;
+    protected $file;
+    public static $store_path_files = '/storage/app/upload';
+    public static $max_file_size = '2000000';
+    public static $allowed_extensions = [];
+    public static $excepted_extensions = [];
     
     public function __construct()
     {
+        $this->getMaxFilesize();
       $this->files = $this->getFiles();
       $this->check();
     }
@@ -32,18 +41,52 @@ class Files
 
     public function checkFile($file)
     {
-        if ( !$request->file || !$request->file->isValid() ) {
-            abort(501,'Your file is broken');
+        if ( !$this->isValid() ) {
+            new FileException('Your file is broken', 501);
         }
-        return $request->file;
+        return true;
     }
-    public function checkFileSize()
+    public function checkFileSize($file)
     {
-        if ($this->file->getClientSize() > static::$max_file_size) {
+        if ($file->size > static::$max_file_size) {
             abort(413,'Overly large file size',['Accept' => static::$max_file_size]);
         }
         return true;
     }
+
+    /**
+     *  Symfony\Component\HttpFoundation\File\UploadedFile:243
+     * Returns the maximum size of an uploaded file as configured in php.ini.
+     *
+     * @return int The maximum size of an uploaded file in bytes
+     */
+    public static function getMaxFilesize()
+    {
+        $iniMax = strtolower(ini_get('upload_max_filesize'));
+
+        if ('' === $iniMax) {
+            self::$max_file_size = PHP_INT_MAX;
+        }
+
+        $max = ltrim($iniMax, '+');
+        if (0 === strpos($max, '0x')) {
+            $max = intval($max, 16);
+        } elseif (0 === strpos($max, '0')) {
+            $max = intval($max, 8);
+        } else {
+            $max = (int) $max;
+        }
+
+        switch (substr($iniMax, -1)) {
+            case 't': $max *= 1024;
+            case 'g': $max *= 1024;
+            case 'm': $max *= 1024;
+            case 'k': $max *= 1024;
+        }
+
+        self::$max_file_size = $max;
+    }
+    
     public function checkExtension()
     {
         if ( $ext = $this->file->guessExtension() ) {
