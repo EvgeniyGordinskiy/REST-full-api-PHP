@@ -1,7 +1,14 @@
 <?php
+
+use \App\Services\Http\Request\Request;
+
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 require  "../autoload.php";
-
-
+ $request = new Request();
+var_dump($request);
+die();
 function env($param =0)
 {
 	$default = parse_ini_file(".env");

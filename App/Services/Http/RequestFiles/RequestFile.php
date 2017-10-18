@@ -4,7 +4,7 @@ namespace App\Services\Http\Files;
 
 use App\Services\Http\Files\src\Files;
 
-class File extends Files
+class RequestFile extends Files
 {
 
     protected $file_name;
@@ -37,10 +37,6 @@ class File extends Files
         return $objects;
     }
 
-    public function init(File $file)
-    {
-      
-    }
 
     public function store()
     {

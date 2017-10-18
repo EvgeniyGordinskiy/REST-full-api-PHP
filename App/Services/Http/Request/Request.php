@@ -1,7 +1,10 @@
 <?php
 namespace App\Services\Http\Request;
 
-class Request{
+use App\Services\Http\Request\src\RequestFacade;
+
+class Request extends RequestFacade
+{
     public $headers = [];
     public $forsmat = "json";
     public $parameters = [];

@@ -4,7 +4,7 @@ namespace App\Services\Http\Files\src;
 
 use App\Services\Exceptions\FileException;
 
-class Files
+class Files extends \SplFileInfo
 {
     private $files = [];
     protected $file_name;
@@ -13,12 +13,12 @@ class Files
     public static $max_file_size = '2000000';
     public static $allowed_extensions = [];
     public static $excepted_extensions = [];
-    
+
     public function __construct()
     {
         $this->getMaxFilesize();
-      $this->files = $this->getFiles();
-      $this->check();
+        $this->files = $this->getFiles();
+        $this->check();
     }
     
     private function getFiles() 
@@ -31,7 +31,7 @@ class Files
 
     private function check()
     {
-        foreach ( $this->files as $file ) {
+        foreach ( $_FILES as $file ) {
         $this->checkFile($file);
         $this->checkFileSize($file);
         $ext = $this->checkExtension($file);
@@ -41,7 +41,7 @@ class Files
 
     public function checkFile($file)
     {
-        if ( !$this->isValid() ) {
+        if ( !$this->isFile() ) {
             new FileException('Your file is broken', 501);
         }
         return true;
@@ -49,7 +49,7 @@ class Files
     public function checkFileSize($file)
     {
         if ($file->size > static::$max_file_size) {
-            abort(413,'Overly large file size',['Accept' => static::$max_file_size]);
+	        new FileException('Overly large file size',413,['Accept' => static::$max_file_size]);
         }
         return true;
     }
