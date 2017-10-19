@@ -2,9 +2,15 @@
 
 namespace App\Services\Http\Response;
 
-use App\Services\Http\ResponseFacade;
-
-class Response extends ResponseFacade
+class Response
 {
+	public function __construct()
+	{
+		$this->createResponse();
+	}
 
+	protected function createResponse()
+	{
+		return new 	\Zend\Diactoros\Response();
+	}
 }

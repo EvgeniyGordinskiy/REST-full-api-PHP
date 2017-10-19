@@ -1,20 +1,18 @@
 <?php
-namespace App\Services;
-class Route{
-    private $requestClass;
+namespace App\Services\Route;
+class Route
+{
+    public $routes;
     
     public function __construct()
     {
-         $request = new Request();
-        if(isset($request->class)) {
-            if (file_exists("App/".$request->version."/".$request->class . ".php")) {
-            $newClass = "App\\".$request->version."\\".$request->class;
-             new $newClass();
-            }else{
-              http_response_code(404);
-            }
-        }else{
-            http_response_code(404);
-        }
+        $this->routes = require_once SITE_ROOT.'/App/routes.php';
+    }
+
+    public function parseRoute($route)
+    {
+		if ( array_key_exists($route, $this->routes) ) {
+			return $this->routes[$route];
+		}
     }
 }

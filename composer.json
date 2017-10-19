@@ -3,12 +3,12 @@
   "require": {
   },
   "require-dev": {
+    "psr/http-message": "1.0.*",
     "symfony/var-dumper": "3.4.*",
-    "phpunit/phpunit": "~4.7"
+    "zendframework/zend-diactoros": "1.6.*"
   },
   "autoload": {
     "psr-4": {
-      "Services\\": "Services/",
       "App\\": "App/"
     }
   },

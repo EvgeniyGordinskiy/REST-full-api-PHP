@@ -2,14 +2,5 @@
 .idea/
 composer.lock
 Would skip repository vendor/symfony/var-dumper
-vendor/symfony/yaml
-vendor/symfony/polyfill-mbstring
-vendor/composer
-vendor/phpspec
-vendor/sebastian
-vendor/phpunit
-vendor/bin
-vendor/autoload.php
-vendor/doctrine
-vendor/webmozart
-vendor/phpdocumentor
+vendor/**
+
