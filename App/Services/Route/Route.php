@@ -1,5 +1,7 @@
 <?php
 namespace App\Services\Route;
+use App\Services\Exceptions\FileException;
+
 class Route
 {
     public $routes;
@@ -11,7 +13,7 @@ class Route
 
     public function parseRoute($route)
     {
-		if ( array_key_exists($route, $this->routes) ) {
+	    if ( array_key_exists($route, $this->routes) ) {
 			return $this->routes[$route];
 		} else {
              $cleanRoutes = $this->cleanRoutes($this->routes);

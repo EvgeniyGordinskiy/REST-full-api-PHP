@@ -1,6 +1,8 @@
 <?php
 namespace App\Services\Permissions;
 
+use App\Services\Exceptions\PermissionException;
+
 class Permission
 {
 	public static function checkPermissions ($userPermissions) {

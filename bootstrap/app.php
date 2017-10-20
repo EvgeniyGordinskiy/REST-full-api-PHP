@@ -4,8 +4,7 @@ use \App\Services\Http\Request\Request;
 
 $request  = (new Request())->server->getRequestTarget();
 $route    = (new Route())->parseRoute($request);
-$isPermission = \App\Services\Permissions\Permission::checkPermissions($rpute['permission']);
-dump($route);
+$isPermission = \App\Services\Permissions\Permission::checkPermissions($route['permission']);
 
 
 
