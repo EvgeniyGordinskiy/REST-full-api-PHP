@@ -4,8 +4,12 @@ namespace App\Services\Exceptions;
 
 use App\Services\Http\Response\Response;
 
-class BAseException extends \Exception
+class BaseException extends \Exception
 {
+	public function __construct () {
+
+	}
+
     public function setHeader($header)
     {
         Response::setHeader($header);

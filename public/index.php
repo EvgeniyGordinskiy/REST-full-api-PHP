@@ -20,7 +20,7 @@ function env($param =0)
 
 function config($param = false)
 {
-
+  parse_ini_file('config/app.php');
 }
 
 

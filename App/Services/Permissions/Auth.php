@@ -12,6 +12,7 @@ class Auth
 
    public function check()
    {
+	   dump('auth check');
 	   return true;
    }
 }

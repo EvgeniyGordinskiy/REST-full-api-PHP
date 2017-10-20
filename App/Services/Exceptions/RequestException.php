@@ -2,7 +2,7 @@
 
 namespace App\Services\Exceptions;
 
-class RequestException extends \Exception
+class RequestException extends BaseException
 {
     
 }
