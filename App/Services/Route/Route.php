@@ -1,8 +1,10 @@
 <?php
 namespace App\Services\Route;
+use App\Services\Exceptions\BaseException;
 use App\Services\Exceptions\FileException;
 use App\Services\Exceptions\NotFoundRouteException;
 use App\Services\Permissions\Permission;
+use App\versions\v1\controllers\UserController;
 
 class Route
 {
@@ -49,13 +51,15 @@ class Route
 		if ( $permission->isPermissions() ) {
 				$file = explode('@',self::$currentRoute['obj'])[0];
 				$method = explode('@',self::$currentRoute['obj'])[1];
-
-				if (file_exists(SITE_ROOT."/App/versions/v".self::$currentRoute['version']."/".$file . ".php")) {
-					$newClass = "App\\versions\\v".self::$currentRoute['version']."\\".$file;
+  		        $pathToFile = config('app','controller_path').self::$currentRoute['version'].DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$file . ".php";
+				if (file_exists($pathToFile)){
+					$newClass = 'App\\versions\\v'.self::$currentRoute['version'].'\\controllers\\'.$file;
 					$object = new $newClass();
 					if ( method_exists($object,$method) ) {
 						dump(call_user_func_array([$object, $method],[]));
 					}
+				} else {
+					throw new BaseException("Directory not found");
 				}
 		}
     }

@@ -1,10 +1,9 @@
 <?php
-namespace Services;
+namespace App\Services\DB;
 
 use PDO;
-use Services\DB\BaseDB;
 
-class DB extends BaseDB {
+class DB {
 
     private $connection;
 
@@ -24,21 +23,21 @@ class DB extends BaseDB {
         }
     }
 
-    public function get($sql = 0){
+    public function exec($sql = false, array $parameters = null){
+	    dump($sql);
         if ($sql){
             $stmt = $this->connection->prepare($sql);
-            $stmt->setFetchMode(PDO::FETCH_ASSOC);
-//            $stmt->bindParam(':username', $user->username);
-//            $stmt->bindParam(':firstname', $user->firstname);
-//            $stmt->bindParam(':lastname', $user->lastname);
-//            $stmt->bindParam(':email', $user->email);
-            $stmt->execute();
-            return $stmt->fetchAll();
+	         if ( $parameters ) {
+		         $stmt->execute($parameters);
+	         } else {
+		         $stmt->setFetchMode(PDO::FETCH_ASSOC);
+		         $stmt->execute();
+		         $stmt->fetchAll();
+		         dump($stmt->fetchAll());
+		         dump($sql);
+	         }
+            return $stmt;
         }
         return false;
-    }
-
-    public function put(){
-        
     }
 }
