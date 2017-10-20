@@ -7,22 +7,35 @@ class Log
 {
 	private $file;
 
-	public function __construct(\Exception $exception, $body = false)
+	public function __construct($exception = false, $body = false, $file = false, $line = false)
 	{
 		$this->checkFile();
-
+		dump($body);
 		if ( !$body ) {
 			$body = $exception->getMessage();
 		}
 
-		$message = "$body of the file ".$exception->getFile()." on line ".$exception->getLine()." \n ".$exception->getTraceAsString()." \n ";
+		if ( !$file ) {
+			$file = $exception->getFile();
+		}
+
+		if ( !$line ) {
+			$line = $exception->getLine();
+		}
+		$trace = "\n";
+
+		if ( $exception && $exception instanceof \Exception) {
+			$trace = '\n '.$exception->getTraceAsString().' \n ';
+		}
+
+		$message = "$body in file $file on line $line $trace";
 		fwrite($this->file, $message);
 		fclose($this->file);
 	}
 
 	private function checkFile()
 	{
-		if ($path = SITE_ROOT.DIRECTORY_SEPARATOR.config('app', 'log')['path']) {
+		if ($path = config('app', 'log')['path']) {
 			$data = date('dmY');
 			$file = $path . DIRECTORY_SEPARATOR . $data . 'Log.php';
 
@@ -45,7 +58,6 @@ class Log
 			} else {
 				$this->file = fopen($file,'a');
 			}
-			//  ($this->file = fopen($file, "a")))
 		}
 	}
 
