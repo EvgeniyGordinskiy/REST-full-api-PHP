@@ -1,7 +1,6 @@
 <?php
 namespace App\Services\Log;
 
-use App\Services\Exceptions\FileException;
 use \App\Services\FileSystem\File;
 
 class Log
@@ -9,7 +8,6 @@ class Log
 
 	public function __construct($exception = false, $body = false, $file = false, $line = false)
 	{
-		dump($body);
 		if ( !$body ) {
 			$body = $exception->getMessage();
 		}
@@ -24,7 +22,7 @@ class Log
 		$trace = "\n";
 
 		if ( $exception && $exception instanceof \Exception) {
-			$trace = '\n '.$exception->getTraceAsString().' \n ';
+			$trace = '\n '.$exception->getTraceAsString()." \n ";
 		}
 
 		$message = date('Y-m-d H:i:s')." $body in file $file on line $line $trace";

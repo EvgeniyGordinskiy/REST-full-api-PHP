@@ -21,15 +21,20 @@ class Route
 		    self::$currentRoute = $this->routes[$route];
 		    return $this->routes[$route];
 		} else {
-             $cleanRoutes = $this->cleanRoutes($this->routes);
-			 $route = preg_replace('/[^a-zA-Z0-9\/_-]+/', '', $route);
-			foreach ($cleanRoutes as $pattern => $value) {
-				 if ( preg_match("/$pattern$/i", $route) ) {
-					 self::$currentRoute = $value;
-					 return $value;
-				 }
-			 }
-			 throw new NotFoundRouteException();
+			try {
+				$cleanRoutes = $this->cleanRoutes($this->routes);
+				$route = preg_replace('/[^a-zA-Z0-9\/_-]+/', '', $route);
+				foreach ($cleanRoutes as $pattern => $value) {
+					if ( preg_match("/$pattern$/i", $route) ) {
+						self::$currentRoute = $value;
+						return $value;
+					}
+				}throw new NotFoundRouteException('Route not found');
+
+			} catch (\Exception $e) {
+			//	throw new NotFoundRouteException('Route not found');
+			}
+
 		}
     }
 
@@ -51,15 +56,13 @@ class Route
 		if ( $permission->isPermissions() ) {
 				$file = explode('@',self::$currentRoute['obj'])[0];
 				$method = explode('@',self::$currentRoute['obj'])[1];
-  		        $pathToFile = config('app','controller_path').self::$currentRoute['version'].DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$file . ".php";
-				if (file_exists($pathToFile)){
-					$newClass = 'App\\versions\\v'.self::$currentRoute['version'].'\\controllers\\'.$file;
+  		      //  $pathToFile = config('app','controller_path').self::$currentRoute['version'].DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$file . ".php";
+				try {
+					$newClass = 'App\\versions\\v' . self::$currentRoute['version'] . '\\controllers\\' . $file;
 					$object = new $newClass();
-					if ( method_exists($object,$method) ) {
-						dump(call_user_func_array([$object, $method],[]));
-					}
-				} else {
-					throw new BaseException("Directory not found");
+					dump(call_user_func_array([$object, $method], []));
+				}catch (\Exception $e) {
+					throw new BaseException($e->getMessage());
 				}
 		}
     }

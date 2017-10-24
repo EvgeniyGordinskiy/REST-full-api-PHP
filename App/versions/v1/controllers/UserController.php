@@ -13,8 +13,8 @@ class UserController
     }
 
     public function index($id=false){
-            dump(User::getClients());
-	    return 'yes';
+        $users = User::getClients();
+	    return $users;
     }
 
     public function all(){

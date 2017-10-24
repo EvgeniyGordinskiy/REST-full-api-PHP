@@ -12,4 +12,14 @@ class User extends Model
 		$sql = "Select * from users";
 		return $db->exec($sql);
 	}
+
+	public static function postClient()
+	{
+		$db = new DB();
+		$client = [
+			'name' => 
+		]
+		$sql = "Insert into users ()";
+		return $db->exec($sql);
+	}
 }
