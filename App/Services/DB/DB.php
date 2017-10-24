@@ -37,10 +37,14 @@ class DB {
 	         if ( $parameters === null ) {
 		         $stmt->execute($parameters);
 	         } else {
-		         $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                 foreach($parameters as $key => $parameter) {
+                  //   $type = gettype($parameter);
+                     $stmt->bindParam($key+1, $parameter, PDO::PARAM_STR);
+                 }
+		      //   $stmt->setFetchMode(PDO::FETCH_ASSOC);
 		         $stmt->execute();
-		         $stmt->fetchAll();
-		         dump($stmt->fetchAll());
+//		         $stmt->fetchAll();
+//		         dump($stmt->fetchAll());
 		         dump($sql);
 	         }
             return $stmt->fetchAll();

@@ -17,9 +17,11 @@ class User extends Model
 	{
 		$db = new DB();
 		$client = [
-			'name' => 
-		]
-		$sql = "Insert into users ()";
-		return $db->exec($sql);
+			'name' => 'RealName',
+			'email' => 'RealEmail'
+		];
+		$sql = "Insert into users (name, email) values (".implode(', ', array_fill(0, count($client), '?'));
+		dump($sql);
+		//return $db->exec($sql);
 	}
 }

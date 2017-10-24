@@ -1,10 +1,8 @@
 <?php
 namespace App\Services\Route;
 use App\Services\Exceptions\BaseException;
-use App\Services\Exceptions\FileException;
 use App\Services\Exceptions\NotFoundRouteException;
 use App\Services\Permissions\Permission;
-use App\versions\v1\controllers\UserController;
 
 class Route
 {
@@ -29,7 +27,8 @@ class Route
 						self::$currentRoute = $value;
 						return $value;
 					}
-				}throw new NotFoundRouteException('Route not found');
+				}
+				throw new NotFoundRouteException('Route not found');
 
 			} catch (\Exception $e) {
 			//	throw new NotFoundRouteException('Route not found');
