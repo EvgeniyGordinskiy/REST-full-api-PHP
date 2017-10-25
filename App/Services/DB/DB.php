@@ -31,7 +31,7 @@ class DB {
     }
 
     public function exec($sql = false, array $parameters = null){
-	    dump($sql , 'Exec function sql');
+	  //  dump($sql, false);
         if ($sql){
             $stmt = $this->connection->prepare($sql);
 	         if ( $parameters === null ) {
@@ -45,7 +45,7 @@ class DB {
 		         $stmt->execute();
 //		         $stmt->fetchAll();
 //		         dump($stmt->fetchAll());
-		         dump($sql);
+		      //   dump($sql);
 	         }
             return $stmt->fetchAll();
         }

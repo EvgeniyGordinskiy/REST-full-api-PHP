@@ -1,8 +1,8 @@
 <?php
 namespace App\versions\v1\controllers;
 
-use \App\versions\v1\models\User;
-use Services\DB;
+use App\Services\Http\Response\Response;
+use App\versions\v1\models\User;
 
 class UserController
 {
@@ -14,16 +14,13 @@ class UserController
 
     public function index($id=false){
         $users = User::getClients();
-	    return $users;
+        $response = new Response();
+        $response->setStatusCode(200);
+        $response->write($users);
+        $response->send();
     }
 
     public function all(){
-        dump(func_get_args());
-        $sql = "SELECT * FROM users";
-        $result = (new DB())->get($sql);
-        if($result){
-            dump($result);
-        }
-            http_response_code(204);
+       
     }
 }

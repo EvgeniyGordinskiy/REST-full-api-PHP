@@ -31,7 +31,6 @@ class Route
 				throw new NotFoundRouteException('Route not found');
 
 			} catch (\Exception $e) {
-			//	throw new NotFoundRouteException('Route not found');
 			}
 
 		}
@@ -53,13 +52,13 @@ class Route
     public static function next (Permission $permission)
     {
 		if ( $permission->isPermissions() ) {
-				$file = explode('@',self::$currentRoute['obj'])[0];
-				$method = explode('@',self::$currentRoute['obj'])[1];
+				$file = strstr(self::$currentRoute['obj'], '@', true);
+				$method = substr(strstr(self::$currentRoute['obj'], '@'), 1);
   		      //  $pathToFile = config('app','controller_path').self::$currentRoute['version'].DIRECTORY_SEPARATOR.'controllers'.DIRECTORY_SEPARATOR.$file . ".php";
 				try {
 					$newClass = 'App\\versions\\v' . self::$currentRoute['version'] . '\\controllers\\' . $file;
 					$object = new $newClass();
-					dump(call_user_func_array([$object, $method], []));
+					call_user_func_array([$object, $method], []);
 				}catch (\Exception $e) {
 					throw new BaseException($e->getMessage());
 				}
