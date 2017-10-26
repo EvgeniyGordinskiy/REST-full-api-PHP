@@ -1,8 +1,8 @@
 <?php
-namespace App\versions\v1\controllers;
+namespace App\versions\v1\users\controllers;
 
 use App\Services\Http\Response\Response;
-use App\versions\v1\models\User;
+use App\versions\v1\users\models\User;
 
 class UserController
 {

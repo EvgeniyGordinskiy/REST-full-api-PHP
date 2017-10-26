@@ -1,5 +1,5 @@
 <?php
-namespace App\versions\v1\models;
+namespace App\versions\v1\users\models;
 
 use App\Services\Model\Model;
 use App\Services\DB\DB;
