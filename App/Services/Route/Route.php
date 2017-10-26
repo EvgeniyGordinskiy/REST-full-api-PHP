@@ -8,9 +8,36 @@ class Route
 {
     public $routes;
     private static $currentRoute;
+	private $parentKey;
     public function __construct()
     {
-        $this->routes = require_once SITE_ROOT.'/App/routes.php';
+        $routes = require_once SITE_ROOT.'/App/routes.php';
+	   $this->merge_routes($routes);
+	    dd($this->routes);
+
+    }
+
+    private function merge_routes($routes, $child = false) {
+	    foreach ($routes as $key => $route) {
+		    if ( is_array($route) ) {
+				if ($key !== 'child' && $key !== 'permission' && !is_int($key)) {
+					if ( key_exists('child', $route) ) {
+						if ( $child ) {
+							$this->parentKey .= $key;
+						} else {
+							$this->parentKey = $key;
+						}
+						$child = $route['child'];
+						unset($route['child']);
+						$this->routes[$this->parentKey] = $route;
+						$this->merge_routes($child, true);
+					} else {
+							$this->routes[$this->parentKey.$key] = $route;
+					}
+				}
+			    $this->merge_routes($route);
+		    }
+	    }
     }
 
     public function parseRoute($route)

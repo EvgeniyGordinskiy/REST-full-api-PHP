@@ -12,7 +12,7 @@ function dd ($var = false) {
 
 function env($param =0)
 {
-	$default = parse_ini_file("./.env");
+	$default = parse_ini_file(SITE_ROOT."/.env");
 	if ($param) {
 		return isset($default[$param]) ? $default[$param] : false;
 	}
