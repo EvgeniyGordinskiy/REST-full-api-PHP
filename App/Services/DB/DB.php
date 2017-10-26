@@ -7,47 +7,44 @@ use PDO;
 
 class DB {
 
-    private $connection;
-
-    public function __construct(PDO $connection = null)
+	private static $state;
+    private function __construct()
     {
-        $this->connection = $connection;
-        if ($this->connection === null) {
             try{
-                $this->connection = new PDO(
+	            self::$state = new PDO(
                     "mysql:host=".env('DB_HOST').";dbname=".env('DB_DATABASE'),
                     env('DB_USERNAME'),
                     env('DB_PASSWORD')
                 );
-                $this->connection->setAttribute(
+	            self::$state->setAttribute(
                     PDO::ATTR_ERRMODE,
                     PDO::ERRMODE_EXCEPTION
                 );
             } catch (\PDOException $e) {
                 new BaseException($e->getMessage());
+	            return false;
             }
-
-        }
     }
 
-    public function exec($sql = false, array $parameters = null){
-	  //  dump($sql, false);
-        if ($sql){
-            $stmt = $this->connection->prepare($sql);
-	         if ( $parameters === null ) {
-		         $stmt->execute($parameters);
-	         } else {
-                 foreach($parameters as $key => $parameter) {
-                  //   $type = gettype($parameter);
-                     $stmt->bindParam($key+1, $parameter, PDO::PARAM_STR);
-                 }
-		      //   $stmt->setFetchMode(PDO::FETCH_ASSOC);
-		         $stmt->execute();
-//		         $stmt->fetchAll();
-//		         dump($stmt->fetchAll());
-		      //   dump($sql);
-	         }
-            return $stmt->fetchAll();
+	private function __clone()
+	{
+	}
+
+
+	public static function exec($sql = false, $param = false){
+	    if (!self::$state) {
+			new self();
+	    }
+	    if ($sql){
+	        try {
+		        $stmt = self::$state->prepare($sql);
+		        if ( !$param ) {
+			        $stmt->execute();
+		        }
+		        return $stmt;
+	        } catch (\PDOException $e) {
+		        new BaseException($e->getMessage());
+	        }
         }
         return false;
     }

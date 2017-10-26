@@ -7,5 +7,6 @@ return
 		'byDay' => true
 	],
 
-	'controller_path' => SITE_ROOT."/App/versions/v"
+	'controller_path' => SITE_ROOT."/App/versions/v",
+	'migrations_path' => SITE_ROOT.'/config/db/migrations'
 ];

@@ -28,6 +28,7 @@ class Route
 						return $value;
 					}
 				}
+				//dd();
 				throw new NotFoundRouteException('Route not found');
 
 			} catch (\Exception $e) {

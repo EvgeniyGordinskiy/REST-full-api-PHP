@@ -3,5 +3,5 @@
 composer.lock
 Would skip repository vendor/symfony/var-dumper
 vendor/**
-storage/log/**
-
+/storage/*.key
+.env
