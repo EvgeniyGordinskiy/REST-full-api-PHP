@@ -126,7 +126,7 @@ class Filter implements RoutesFilter
 	 */
 	public function beforeRoute($beforeRoute)
 	{
-		if ( !preg_match('/^(\w+)@(\w+)$/', $beforeRoute) ) {
+		if ( !preg_match('/^(\w+)$/', $beforeRoute) ) {
 			throw new RouteException("Wrong syntax routes beforeRoute in the route: '$this->routeUrl'");
 		}
 		return true;
@@ -139,7 +139,7 @@ class Filter implements RoutesFilter
 	 */
 	public function afterRoute($afterRoute)
 	{
-		if ( !preg_match('/^(\w+)@(\w+)$/', $afterRoute) ) {
+		if ( !preg_match('/^(\w+)$/', $afterRoute) ) {
 			throw new RouteException("Wrong syntax routes afterRoute in the route: '$this->routeUrl'");
 		}
 		return true;
@@ -167,10 +167,10 @@ class Filter implements RoutesFilter
 				continue;
 			}
 			if (empty($open_braces)) {
-				return FALSE;
+				return false;
 			}
 			if ($braces_map[array_pop($open_braces)] !== $brace) {
-				return FALSE;
+				return false;
 			}
 		}
 

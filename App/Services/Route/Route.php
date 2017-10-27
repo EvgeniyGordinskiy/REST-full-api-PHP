@@ -19,6 +19,7 @@ class Route
 	    $routes = require_once config('app', 'app_routes');
 	    $this->filter = new Filter();
 	    foreach ($routes as $key => $route) {
+
 		    $this->merge_routes($route, false, $key);
 	    }
     }

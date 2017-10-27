@@ -1,10 +1,11 @@
 <?php
 namespace App\versions\v1\users\controllers;
 
+use App\Services\Controller\BaseController;
 use App\Services\Http\Response\Response;
 use App\versions\v1\users\models\User;
 
-class UserController
+class UserController extends BaseController
 {
     private $request;
 
