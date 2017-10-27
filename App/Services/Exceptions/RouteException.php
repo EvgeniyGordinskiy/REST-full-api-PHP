@@ -2,7 +2,7 @@
 
 namespace App\Services\Exceptions;
 
-class NotFoundRouteException extends BaseException
+class RouteException extends BaseException
 {
 	public function __construct($message = false)
 	{
