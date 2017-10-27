@@ -7,7 +7,7 @@ return
 		'path'  => SITE_ROOT.DIRECTORY_SEPARATOR.'storage/log',
 		'byDay' => true
 	],
-
+	'app_routes'      => SITE_ROOT.'/App/routes.php',
 	'controller_path' => SITE_ROOT."/App/versions/v",
 	'migrations_path' => SITE_ROOT.'/config/db/migrations',
 
@@ -18,6 +18,6 @@ return
 							'filter',
 							'version',
 							'beforeRoute',
-							'afterRoute'
+							'afterRoute',
 						 ],
 ];

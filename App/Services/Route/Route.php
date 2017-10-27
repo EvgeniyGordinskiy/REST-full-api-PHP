@@ -16,13 +16,11 @@ class Route
 
     public function __construct()
     {
-        $routes = require_once SITE_ROOT.'/App/routes.php';
+	    $routes = require_once config('app', 'app_routes');
 	    $this->filter = new Filter();
 	    foreach ($routes as $key => $route) {
 		    $this->merge_routes($route, false, $key);
 	    }
-	    var_dump(preg_match('/^[a-zA-Z0-9\_-\{\}\/\$]+$/', '/id'));
-	    dd($this->routes);
     }
 
     private function merge_routes($routes, $child = false, $component = false)
@@ -31,93 +29,47 @@ class Route
 	        $this->component = $component;
         }
 	    foreach ($routes as $key => $route) {
-		    var_dump($key);
-			  //  $route = $this->cleanRoutes($route, $key);
+
+		    $this->filter->transform($route, $key);
+		    if ( !$route['permission'] ) {
+			    $route['permission'] = [];
+		    }
 			$route['component'] = $this->component;
+
 			if ( key_exists('child', $route) ) {
+
 				if ( !$child ) {
 					$this->parentRoute = $route;
 					$this->parentRoute['key'] = $key;
 				} else {
 					$this->parentRoute['key'] .= $key;
-					$route['permission'] = array_replace([$route['permission']], $this->parentRoute);
+					$this->parentRoute['permission'] = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
+					$route['permission'] = $this->parentRoute['permission'];
 				}
+
 				$childRoute = $route['child'];
 				unset($route['child']);
 				$this->routes[$this->parentRoute['key']] = $route;
 				$this->merge_routes($childRoute, true);
 			} else {
+				$route['permission'] = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
 				$this->routes[$this->parentRoute['key'].$key] = $route;
 			}
 	    }
     }
 
-	private function cleanRoutes(array $route, $key)
-	{
-			$newRoute = [];
-
-			$newURL = preg_replace(['/{(.*?)}/', '/\//'], ['[a-zA-Z0-9]+', '\/'] ,$key);
-			/*
-             Check obj syntax
-			*/
-			if ( !preg_match('/^(\w+)@(\w+)$/', $route['obj']) ) {
-				throw new RouteException("Wrong syntax routes object in the route: '$key'");
-			}
-			/*
-             Check version syntax
-			*/
-			if ( !isset($route['version']) ) {
-				$route['version'] = '';
-			} elseif ( !is_int($route['version']) && !is_float($route['version']) ) {
-				throw new RouteException("Wrong syntax routes version in the route: '$key'");
-			}
-			/*
-			  Check filters syntax
-			 */
-			if (!isset($route['filter']) ) {
-				$route['filter'] = '';
-			}   elseif ( !preg_match('/^(\w+)$/', $route['filter']) ) {
-				throw new RouteException("Wrong syntax routes filter in the route: '$key'");
-			}
-			/*
-			  If permission is empty, create empty array
-			  If permission is not string or array throw RouteExeption.
-			  Else create array with this string.
-			*/
-			if ( !isset($route['permission']) ) {
-				$route['permission'] = [];
-			} elseif ( !is_array($route['permission']) ) {
-				if ( !is_string($route['permission']) ) {
-					throw new RouteException("Permission must be instance string or array in the route: '$key'");
-				}
-				if ( !preg_match('/^(\w+)$/', $route['permission']) ) {
-					throw new RouteException("Wrong syntax routes permission. in the route: '$key'");
-				}
-
-				$route['permission'] = [$route['permission']];
-			} else {
-				foreach ( $route['permission'] as $permission ) {
-					if ( !preg_match('/^(\w+)$/', $permission) ) {
-						throw new RouteException("Wrong syntax routes permission. in the route: '$key'");
-					}
-				}
-			}
-
-			$newRoute["$newURL"] = $route;
-			return $newRoute;
-	}
-
     public function parseRoute($route)
     {
+	    $route = preg_replace(['/[^a-zA-Z0-9\/_-]+/', '/\//'], ['', '\/'], $route);
+
 	    if ( array_key_exists($route, $this->routes) ) {
 		    self::$currentRoute = $this->routes[$route];
 		    return $this->routes[$route];
 		} else {
 			try {
 				$cleanRoutes = $this->routes;
-				$route = preg_replace('/[^a-zA-Z0-9\/_-]+/', '', $route);
 				foreach ($cleanRoutes as $pattern => $value) {
-					if ( preg_match("/$pattern$/i", $route) ) {
+					if ( preg_match("/^$pattern$/i", $route) ) {
 						$value['pattern'] = $pattern;
 						self::$currentRoute = $value;
 						return $value;

@@ -21,7 +21,7 @@ function env($param =0)
 
 function config($file, $param = false)
 {
-	if ( $configs = require_once SITE_ROOT."/config/$file.php" ) {
+	if ( $configs = require SITE_ROOT."/config/$file.php" ) {
 		if ( $param ) {
 			return $configs[$param];
 		}

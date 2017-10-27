@@ -12,7 +12,7 @@ class Admin
 
 	public function check()
 	{
-		dump('admin check');
+		var_dump('admin check');
 		return true;
 	}
 }

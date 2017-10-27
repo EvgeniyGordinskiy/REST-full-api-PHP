@@ -10,14 +10,16 @@ return
 			'child'      => [
 				'/{id}' => [
 					'obj'        => 'UserController@get',
+					'permission' => ['auth', 'auth'],
 				],
 				'/{id}/post/{post_id}' => [
 					'obj'        => 'UserController@getPost',
-					'filter'     => 'UserWithPost.php',
+					'permission' => 'her',
+					'filter'     => 'UserWithPost',
 					'child'      => [
 						'/delete' => [
 							'obj'        => 'PostController@delete',
-							'permission' => 'admin',
+							'permission' => ['admin', 'auth', 'auth'],
 							'version'    => 2
 						]
 					]

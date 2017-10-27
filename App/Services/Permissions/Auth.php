@@ -12,7 +12,7 @@ class Auth
 
    public function check()
    {
-	   dump('auth check');
+	   var_dump('auth check');
 	   return true;
    }
 }

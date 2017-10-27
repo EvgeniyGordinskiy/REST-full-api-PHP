@@ -1,6 +1,7 @@
 <?php
 namespace App\Services\Route\Routes_filter;
 
+use App\Services\Exceptions\FilterException;
 use App\Services\Exceptions\RouteException;
 
 class Filter implements RoutesFilter
@@ -18,16 +19,26 @@ class Filter implements RoutesFilter
 	 * @param $route
 	 * @param $routeUrl
 	 */
-	public function check($route, $routeUrl)
+	public function transform(&$route, &$routeUrl)
 	{
 		$this->validateRouteUrl($routeUrl);
+		$routeUrl = $this->url($routeUrl);
 		$this->routeUrl = $routeUrl;
 		foreach ($this->rows as $row) {
+
+			if ( !method_exists($this, $row) ) {
+				throw new FilterException("unknown method $row");
+			}
+
 			if ( !isset($route[$row]) ) {
 				$route[$row] = '';
 			} else {
-				//call_user_func_array()
-				$this->$row($route[$row]);
+
+				$result = call_user_func_array([$this, $row], [$route[$row]]);
+
+				if ( !is_bool($result) ) {
+					$route[$row] = $result;
+				}
 			}
 		}
 	}

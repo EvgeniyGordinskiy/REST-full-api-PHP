@@ -24,7 +24,7 @@ class Response
 		$this->server->getBody()->write(json_encode($data));
 	}
 
-	public function send()
+	public function send($msg = false)
 	{
 		$status = $this->server->getStatusCode();
 		http_response_code($status);
@@ -39,6 +39,9 @@ class Response
 			header_remove('Content-type');
 			header('Content-type:application/json;charset=utf-8');
 			echo $content;
+		}
+		if ($msg) {
+			echo $msg;
 		}
 	}
 }
