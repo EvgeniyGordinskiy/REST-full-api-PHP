@@ -4,7 +4,6 @@ return
 	[
 		'/user' =>  [
 			'obj'        => 'UserController@index',
-			'permission' => 'auth',
 			'filter'     => 'UserFilter',
 			'version'    => 1.0,
 			'child'      => [

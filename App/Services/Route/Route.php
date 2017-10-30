@@ -18,18 +18,37 @@ class Route
     {
 	    $routes = require_once config('app', 'app_routes');
 	    $this->filter = new Filter();
-	    foreach ($routes as $key => $route) {
-
+	    foreach ($routes['app']['child'] as $key => $route) {
+		    if ( !preg_match('/_component/', $key) ) {
+			    if ( isset($route['permission']) ) {
+				    $this->parentRoute['permission'] = $this->filter->permission($route['permission']);
+			    } else {
+				    $this->parentRoute['permission'] = [];
+			    }
+			    if ( isset($route['child']) ) {
+				    $this->merge_routes($route['child'], false);
+			    }
+			    continue;
+		    }
 		    $this->merge_routes($route, false, $key);
 	    }
+
+	    dd($this->routes);
+
     }
 
     private function merge_routes($routes, $child = false, $component = false)
     {
+
         if ( $component ) {
 	        $this->component = $component;
         }
+
 	    foreach ($routes as $key => $route) {
+		    if ( !isset($route['obj']) && !isset($route['child']) ) {
+			    $this->merge_routes($route, false, $key);
+			   continue;
+		    }
 
 		    $this->filter->transform($route, $key);
 		    if ( !$route['permission'] ) {
@@ -40,12 +59,13 @@ class Route
 			if ( key_exists('child', $route) ) {
 
 				if ( !$child ) {
-					$this->parentRoute = $route;
-					$this->parentRoute['key'] = $key;
+					$route['permission']             = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
+					$this->parentRoute               = $route;
+					$this->parentRoute['key']        = $key;
 				} else {
-					$this->parentRoute['key'] .= $key;
+					$this->parentRoute['key']       .= $key;
 					$this->parentRoute['permission'] = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
-					$route['permission'] = $this->parentRoute['permission'];
+					$route['permission']             = $this->parentRoute['permission'];
 				}
 
 				$childRoute = $route['child'];
