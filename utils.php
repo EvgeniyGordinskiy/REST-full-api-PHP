@@ -1,7 +1,5 @@
 <?php
 
-define('SITE_ROOT', __DIR__);
-
 function dd ($var = false) {
 	ob_get_contents();
 	if ($var) {
@@ -30,10 +28,3 @@ function config($file, $param = false)
 
 	return false;
 }
-
-$loader   = require_once __DIR__.'/vendor/autoload.php';
-
-$bootstrap = require_once __DIR__.'/bootstrap/app.php';
-
-
-

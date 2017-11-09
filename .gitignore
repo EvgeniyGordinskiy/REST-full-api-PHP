@@ -1,7 +1,4 @@
-.gitignore
-.idea/
-composer.lock
-Would skip repository vendor/symfony/var-dumper
-vendor/**
+/.idea
+/vendor
 /storage/*.key
 .env

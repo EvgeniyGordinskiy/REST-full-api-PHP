@@ -13,7 +13,7 @@ set_error_handler(function( $num, $str, $file, $line, $context ) {
 	return false;
 });
 
-require  "../autoload.php";
+require  "../init.php";
 
 
 

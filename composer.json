@@ -1,11 +1,11 @@
 {
   "name": "REST api PHP",
   "require": {
-  },
-  "require-dev": {
     "psr/http-message": "1.0.*",
     "symfony/var-dumper": "3.4.*",
     "zendframework/zend-diactoros": "1.6.*"
+  },
+  "require-dev": {
   },
   "autoload": {
     "psr-4": {
