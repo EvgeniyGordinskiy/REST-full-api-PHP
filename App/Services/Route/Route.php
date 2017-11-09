@@ -12,71 +12,62 @@ class Route
 	private $filter;
     private static $currentRoute;
 	private $parentRoute;
-	private $component;
+	private $parentChild;
+	private $parentPermission;
 
     public function __construct()
     {
 	    $routes = require_once config('app', 'app_routes');
 	    $this->filter = new Filter();
-	    foreach ($routes['app']['child'] as $key => $route) {
-		    if ( !preg_match('/_component/', $key) ) {
-			    if ( isset($route['permission']) ) {
-				    $this->parentRoute['permission'] = $this->filter->permission($route['permission']);
-			    } else {
-				    $this->parentRoute['permission'] = [];
-			    }
-			    if ( isset($route['child']) ) {
-				    $this->merge_routes($route['child'], false);
-			    }
-			    continue;
-		    }
-		    $this->merge_routes($route, false, $key);
+
+	    foreach ($routes as $route) {
+		    $this->parentRoute = '';
+			$this->merge_routes($route, true);
 	    }
-
 	    dd($this->routes);
-
+	    exit();
     }
 
-    private function merge_routes($routes, $child = false, $component = false)
+    private function merge_routes($route, $parent = [])
     {
+		$this->filter->transform($route);
 
-        if ( $component ) {
-	        $this->component = $component;
-        }
-
-	    foreach ($routes as $key => $route) {
-		    if ( !isset($route['obj']) && !isset($route['child']) ) {
-			    $this->merge_routes($route, false, $key);
-			   continue;
-		    }
-
-		    $this->filter->transform($route, $key);
-		    if ( !$route['permission'] ) {
-			    $route['permission'] = [];
-		    }
-			$route['component'] = $this->component;
-
-			if ( key_exists('child', $route) ) {
-
-				if ( !$child ) {
-					$route['permission']             = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
-					$this->parentRoute               = $route;
-					$this->parentRoute['key']        = $key;
-				} else {
-					$this->parentRoute['key']       .= $key;
-					$this->parentRoute['permission'] = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
-					$route['permission']             = $this->parentRoute['permission'];
-				}
-
-				$childRoute = $route['child'];
-				unset($route['child']);
-				$this->routes[$this->parentRoute['key']] = $route;
-				$this->merge_routes($childRoute, true);
-			} else {
-				$route['permission'] = array_unique(array_merge($route['permission'], $this->parentRoute['permission']));
-				$this->routes[$this->parentRoute['key'].$key] = $route;
-			}
+	    if ( $parent ) {
+		    $this->parentChild = $route['child'] ?? [];
+		    $this->parentPermission = $route['permission'];
 	    }
+
+	    if ( !$route['permission'] ){
+		    $route['permission'] = [];
+	    } elseif ( !isset($this->parentRoute['permission']) ) {
+		    $this->parentRoute['permission'] = $route['permission'];
+	    };
+
+	    if ( isset($route['permission']) &&  isset($this->parentRoute['permission']) ) {
+		    $route['permission'] =  $this->parentRoute['permission'] = array_unique(array_merge($this->parentRoute['permission'], $route['permission']));
+	    }
+
+	    if ( isset($this->parentChild[0]) && $route['path'] === $this->filter->url($this->parentChild[0]['path']) ) {
+		    $route['permission'] = $this->parentPermission;
+		    $this->parentRoute = $route;
+		    $url = $this->parentRoute['path'];
+		    $this->routes[$url] = $this->parentRoute;
+		    array_shift($this->parentChild);
+	    } elseif ( $route['path'] && $route['obj'] ) {
+		    $this->parentRoute['path'] = $url = $this->parentRoute['path'].$route['path'];
+			$this->routes[$url]['path'] = $this->parentRoute['path'];
+		}
+
+		if ( key_exists('child', $route) ) {
+
+			if ( isset($url) ) {
+				unset($this->routes[$url]['child']);
+			}
+
+			foreach ($route['child'] as $key => $child) {
+				$this->merge_routes($child);
+			}
+		}
     }
 
     public function parseRoute($route)

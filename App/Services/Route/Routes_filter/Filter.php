@@ -19,11 +19,16 @@ class Filter implements RoutesFilter
 	 * @param $route
 	 * @param $routeUrl
 	 */
-	public function transform(&$route, &$routeUrl)
+	public function transform(&$route)
 	{
-		$this->validateRouteUrl($routeUrl);
-		$routeUrl = $this->url($routeUrl);
-		$this->routeUrl = $routeUrl;
+		if ( isset($route['path']) ) {
+			$routeUrl = $route['path'];
+			$this->validateRouteUrl($routeUrl);
+			$this->routeUrl = $route['path'] = $this->url($routeUrl);
+		} else {
+			$route['path'] = '';
+		}
+
 		foreach ($this->rows as $row) {
 
 			if ( !method_exists($this, $row) ) {
@@ -101,22 +106,27 @@ class Filter implements RoutesFilter
 	public function permission($permission)
 	{
 		$checkedPermission = $permission;
-		if ( !is_array($permission) ) {
-			if ( !is_string($permission) ) {
-				throw new RouteException("Permission must be instance string or array in the route: '$this->routeUrl'");
-			}
-			if ( !preg_match('/^(\w+)$/', $permission) ) {
-				throw new RouteException("Wrong syntax routes permission. in the route: '$this->routeUrl'");
-			}
-			$checkedPermission = [$permission];
-		} else {
-			foreach ( $permission as $perm ) {
-				if ( !preg_match('/^(\w+)$/', $perm) ) {
+
+		if ( is_string($checkedPermission) ) {
+
+			if ( ! $checkedPermission = explode(',', $checkedPermission) ) {
+				if ( !preg_match('/^(\w+)$/', $permission) ) {
 					throw new RouteException("Wrong syntax routes permission. in the route: '$this->routeUrl'");
 				}
 			}
 		}
-		return $checkedPermission;
+
+		if ( is_array($checkedPermission) ) {
+
+			foreach ( $checkedPermission as $perm ) {
+				if ( !preg_match('/^(\w+)$/', $perm) ) {
+					throw new RouteException("Wrong syntax routes permission. in the route: '$this->routeUrl'");
+				}
+			}
+			return $checkedPermission;
+		}
+
+		throw new RouteException("Permission must be instance string or array in the route: '$this->routeUrl'");
 	}
 
 	/**

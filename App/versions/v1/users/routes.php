@@ -2,21 +2,24 @@
 
 return
 	[
-		'/user' =>  [
+			'path'       => '/user',
 			'obj'        => 'UserController@index',
 			'filter'     => 'UserFilter',
 			'version'    => 1.0,
 			'child'      => [
-				'/{id}' => [
+				[
+					'path'       => '/{id}',
 					'obj'        => 'UserController@get',
 					'permission' => ['auth', 'auth'],
 				],
-				'/{id}/post/{post_id}' => [
+				[
+				 	'path'       => '/{id}/post/{post_id}',
 					'obj'        => 'UserController@getPost',
 					'permission' => 'her',
 					'filter'     => 'UserWithPost',
 					'child'      => [
-						'/delete' => [
+						[
+							'path'       => '/delete',
 							'obj'        => 'PostController@delete',
 							'permission' => ['admin', 'auth', 'auth'],
 							'version'    => 2
@@ -24,6 +27,4 @@ return
 					]
 				],
 			]
-		],
-
 	];

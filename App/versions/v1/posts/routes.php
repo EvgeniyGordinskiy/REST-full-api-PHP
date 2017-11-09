@@ -2,16 +2,15 @@
 
 return
 	[
-		'/post' =>  [
+		 	'path'       => '/post',
 			'obj'        => 'PostController@index',
 			'version'    => 1,
 			'child'      => [
-				'/{id}' => [
+				[
+					'path'       => '/{id}',
 					'obj'        => 'PostController@get',
 					'permission' => ['auth','admin'],
 					'version'    => 1
 				],
 			]
-		],
-
 	];
