@@ -12,7 +12,7 @@
 | loading of any our classes "manually". Feels great to relax.
 |
 */
-require __DIR__.'/autoload.php';
+require __DIR__.'/init.php';
 
 $app = require_once __DIR__.'/bootstrap/app.php';
 

@@ -4,9 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "66bfce7b049375df43d5285e684b3d30",
-    "packages": [],
-    "packages-dev": [
+    "content-hash": "50efdcfa8787e9856057c49beb655152",
+    "packages": [
         {
             "name": "psr/http-message",
             "version": "1.0.1",
@@ -118,16 +117,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.4.0-BETA1",
+            "version": "v3.4.0-BETA3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "41c9a132b8f96797e750ccb50d1064aab5b16d93"
+                "reference": "11310e8e67a2af653bc9ae2b7d7b1b25c91cd569"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/41c9a132b8f96797e750ccb50d1064aab5b16d93",
-                "reference": "41c9a132b8f96797e750ccb50d1064aab5b16d93",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/11310e8e67a2af653bc9ae2b7d7b1b25c91cd569",
+                "reference": "11310e8e67a2af653bc9ae2b7d7b1b25c91cd569",
                 "shasum": ""
             },
             "require": {
@@ -183,7 +182,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2017-10-10T17:27:52+00:00"
+            "time": "2017-11-05T16:59:57+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -238,6 +237,7 @@
             "time": "2017-10-12T15:24:51+00:00"
         }
     ],
+    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": [],
