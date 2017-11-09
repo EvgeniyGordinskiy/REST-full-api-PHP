@@ -7,11 +7,13 @@ final class Permission
 {
 	private $isPermission;
 
-	private function __construct ($permission) {
+	private function __construct ($permission) 
+	{
 		$this->isPermission = $permission;
 	}
 
-	public static function checkPermissions ($userPermissions) {
+	public static function checkPermissions ($userPermissions) 
+	{
 
 		$permissions = require_once SITE_ROOT.'/config/permissions.php';
 		try{

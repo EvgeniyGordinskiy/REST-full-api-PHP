@@ -3,7 +3,8 @@
   "require": {
     "psr/http-message": "1.0.*",
     "symfony/var-dumper": "3.4.*",
-    "zendframework/zend-diactoros": "1.6.*"
+    "zendframework/zend-diactoros": "1.6.*",
+    "php": ">=7.0"
   },
   "require-dev": {
   },

@@ -9,11 +9,13 @@ class UserController extends BaseController
 {
     private $request;
 
-    public function __construct (){
+    public function __construct ()
+    {
 
     }
 
-    public function index($id=false){
+    public function index($id=false)
+    {
         $users = User::getClients();
         $response = new Response();
         $response->setStatusCode(200);
@@ -21,7 +23,8 @@ class UserController extends BaseController
         $response->send();
     }
 
-    public function all(){
+    public function all()
+    {
        
     }
 }

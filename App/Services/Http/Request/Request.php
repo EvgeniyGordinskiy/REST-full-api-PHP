@@ -18,8 +18,7 @@ class Request
 
 	public function getHeader($header)
 	{
-		$header = $this;
-		return $header;
+		
 	}
 
 
@@ -29,7 +28,6 @@ class Request
 		if (array_key_exists($property, $params)) {
 			return $params[$property];
 		}
-
 		return null;
 	}
 }

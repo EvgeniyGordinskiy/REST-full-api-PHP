@@ -13,7 +13,7 @@ interface Factory
      * @param  array  $messages
      * @param  array  $customAttributes
      */
-	paubli function make(array $data, array $rules, array $messages = [], array $customAttributes = []);
+	public function make(array $data, array $rules, array $messages = [], array $customAttributes = []);
 
   	/**
      * Register a custom validator extension.

@@ -8,8 +8,7 @@ use PDO;
 class DB {
 
 	private static $state;
-    private function __construct()
-    {
+    private function __construct() {
             try{
 	            self::$state = new PDO(
                     "mysql:host=".env('DB_HOST').";dbname=".env('DB_DATABASE'),
@@ -22,7 +21,6 @@ class DB {
                 );
             } catch (\PDOException $e) {
                 new BaseException($e->getMessage());
-	            return false;
             }
     }
 
@@ -31,7 +29,7 @@ class DB {
 	}
 
 
-	public static function exec($sql = false, $param = false){
+	public static function exec($sql = false, $param = false) {
 	    if (!self::$state) {
 			new self();
 	    }
