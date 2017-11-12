@@ -12,7 +12,7 @@ class Admin implements IPermission
 
 	public function check()
 	{
-		var_dump('admin check');
+//		var_dump('admin check');
 		return true;
 	}
 }

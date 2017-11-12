@@ -24,6 +24,7 @@ return
 							'path'       => '/delete',
 							'obj'        => 'PostController@delete',
 							'permission' => ['admin', 'auth', 'auth'],
+							'component'     => 'posts',
 							'version'    => 2
 						]
 					]

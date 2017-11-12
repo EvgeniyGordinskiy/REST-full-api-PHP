@@ -10,9 +10,9 @@ class Auth implements IPermission
 	  // $request = (new Request())->getHeader('auth');
    }
 
-   public function check()  : bool 
+   public function check()  : bool
    {
-	   var_dump('auth check');
+//	   var_dump('auth check');
 	   return true;
    }
 }

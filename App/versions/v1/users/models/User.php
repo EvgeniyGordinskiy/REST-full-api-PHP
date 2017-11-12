@@ -9,7 +9,7 @@ class User extends Model
 	public static function getClients()
 	{
 		$sql = DB::exec("Select * from users");
-		return $sql->fetchAll();
+		return $sql->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
 	public static function postClient()

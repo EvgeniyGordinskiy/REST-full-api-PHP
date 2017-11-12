@@ -52,6 +52,7 @@ class Response
 				header($header);
 			}
 		}
+		
 		$this->server->getBody()->rewind();
 		$content = $this->server->getBody()->getContents();
 		if ( $content ) {
