@@ -5,24 +5,33 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class Request
 {
+	// Zend\Diactoros\ServerRequest instance
     public $server;
+
+	/**
+	 * Request constructor.
+	 */
 	public function __construct()
 	{
-		$this->getServerRequest();
-	}	
+		$this->_getServerRequest();
+	}
 
-	protected function getServerRequest()
+	/**
+	 * Create instance of ServerRequest and saving to the property server
+	 */
+	protected function _getServerRequest()
 	{
 		$this->server = ServerRequestFactory::fromGlobals();
 	}
 
-	public function getHeader($header)
-	{
-		
-	}
-
-
-	public function __get($property)
+	/**
+	 * Allowing us get property of ServerRequest,
+	 * without using public property server.
+	 * 
+	 * @param string $property
+	 * @return null|string
+	 */
+	public function __get(string $property)
 	{
 		$params = $this->server->getQueryParams();
 		if (array_key_exists($property, $params)) {

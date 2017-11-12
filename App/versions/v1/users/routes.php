@@ -5,12 +5,14 @@ return
 			'path'       => '/user',
 			'obj'        => 'UserController@index',
 			'filter'     => 'UserFilter',
+			'component'     => 'users',
 			'version'    => 1.0,
 			'child'      => [
 				[
 					'path'       => '/{id}',
 					'obj'        => 'UserController@get',
 					'permission' => ['auth', 'auth'],
+
 				],
 				[
 				 	'path'       => '/{id}/post/{post_id}',

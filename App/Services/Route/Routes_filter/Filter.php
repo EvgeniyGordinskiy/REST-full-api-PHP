@@ -4,7 +4,7 @@ namespace App\Services\Route\Routes_filter;
 use App\Services\Exceptions\FilterException;
 use App\Services\Exceptions\RouteException;
 
-class Filter implements RoutesFilter
+class Filter implements IFilter
 {
 	private $routeUrl;
 	private $rows;

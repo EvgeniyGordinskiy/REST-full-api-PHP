@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Route\Routes_filter;
 
-interface RoutesFilter
+interface IFilter
 {
 	/**
 	 * Creating pattern from routes url

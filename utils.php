@@ -5,7 +5,7 @@ function dd ($var = false) {
 	if ($var) {
 		dump($var);
 	}
-	//exit();
+	exit();
 }
 
 function env($param =0)

@@ -1,11 +1,18 @@
 <?php
 namespace App\Services\Controller;
 
-class BaseController
-{
+use App\Traits\HttpApi;
 
-//	public function __construct(BeforeRouter $beforeRouter, AfterRouter $afterRouter, Filter $filter)
-//	{
-//
-//	}
+abstract class BaseController
+{
+    /**
+     * Work with Request/Response
+     */
+    use HttpApi;
+
+    /**
+     * Instance by Filter,  which is defined in the Route.php
+     * @var
+     */
+    public $filter;
 }

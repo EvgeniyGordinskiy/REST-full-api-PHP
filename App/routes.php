@@ -6,18 +6,10 @@ return
 [
 	 [
 		'permission' => 'guest',
-		 'name'      => 'interface',
+		'name'      => 'interface',
 		'child'      => [
 			$users,
 			$posts,
 		]
 	],
-	[
-		'name'       => 'dashboard',
-		'permission' => 'admin',
-		'child'      => [
-			$users,
-			$posts,
-		]
-	]
 ];

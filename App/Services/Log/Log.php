@@ -6,7 +6,14 @@ use \App\Services\FileSystem\File;
 class Log
 {
 
-	public function __construct($exception = false, $body = false, $file = false, $line = false)
+	/**
+	 * Log constructor. Writing message to the file.
+	 * @param \Exception $exception
+	 * @param string $body
+	 * @param string $file
+	 * @param number $line
+	 */
+	public function __construct($exception = false, $body = '', $file = '', $line = 0)
 	{
 		if ( !$body ) {
 			$body = $exception->getMessage();

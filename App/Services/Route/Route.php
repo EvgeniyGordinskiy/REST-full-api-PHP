@@ -36,7 +36,7 @@ class Route
 		    $this->parentPermission = $route['permission'];
 	    }
 
-	    if ( !$route['permission'] ){
+	    if ( !$route['permission'] ) {
 		    $route['permission'] = [];
 	    } elseif ( !isset($this->parentRoute['permission']) ) {
 		    $this->parentRoute['permission'] = $route['permission'];
@@ -50,11 +50,13 @@ class Route
 		    $route['permission'] = $this->parentPermission;
 		    $this->parentRoute = $route;
 		    $url = $this->parentRoute['path'];
-		    $this->routes[$url] = $this->parentRoute;
+			$this->routes[$url] = $this->parentRoute;
 		    array_shift($this->parentChild);
 	    } elseif ( $route['path'] && $route['obj'] ) {
-		    $this->parentRoute['path'] = $url = $this->parentRoute['path'].$route['path'];
-			$this->routes[$url]['path'] = $this->parentRoute['path'];
+			$this->parentRoute['path'] = $url = $this->parentRoute['path'].$route['path'];
+			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
+			$this->routes[$url] = $this->parentRoute;
+			$this->routes[$url]['component'] = $component;
 		}
 
 		if ( key_exists('child', $route) ) {
@@ -71,7 +73,7 @@ class Route
 
     public function parseRoute($route)
     {
-	    $route = preg_replace(['/[^a-zA-Z0-9\/_-]+/', '/\//'], ['', '\/'], $route);
+	    $route = preg_replace('/[^a-zA-Z0-9\/_-]+/', '', $route);
 
 	    if ( array_key_exists($route, $this->routes) ) {
 		    self::$currentRoute = $this->routes[$route];
@@ -86,13 +88,13 @@ class Route
 				return $value;
 			}
 		}
-
-			throw new RouteException('Route not found');
+		return false;
     }
 
-    public static function next (Permission $permission)
+    public static function handle (Permission $permission)
     {
-		if ( $permission->isPermissions() ) {
+		if ( $permission->hasPermissions() ) {
+
 			$file = strstr(self::$currentRoute['obj'], '@', true);
 			$method = substr(strstr(self::$currentRoute['obj'], '@'), 1);
 			try {

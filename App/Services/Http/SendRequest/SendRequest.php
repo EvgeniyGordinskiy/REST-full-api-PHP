@@ -8,10 +8,10 @@ class SendRequest
 
 	public function __construct()
 	{
-		$this->createRequest();
+		$this -> _createRequest();
 	}
 
-	protected function createRequest()
+	protected function _createRequest()
 	{
 		return 	new Request();
 	}

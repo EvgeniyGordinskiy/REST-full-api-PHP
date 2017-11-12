@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\BeforeRouter;
 
-interface BaseBeforeRouter
+interface IBeforeRouter
 {
 	public function run();
 

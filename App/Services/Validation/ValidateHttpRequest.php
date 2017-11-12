@@ -1,5 +1,5 @@
 <?php
-namespace Services\Validation\;
+namespace Services\Validation;
 
 abstract class ValidateHttpRequest
 {

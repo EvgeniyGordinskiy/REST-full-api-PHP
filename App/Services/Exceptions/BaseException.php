@@ -7,11 +7,16 @@ use App\Services\Log\Log;
 
 class BaseException extends \RuntimeException
 {
-	public function __construct (string $message = null) {
+	/**
+	 * BaseException constructor. Send headers with message and status.
+	 * @param string|null $message
+	 */
+	public function __construct (string $message = null, $code = 500)
+	{
 		$message = ucfirst(strtolower($message));
         new Log($this, $message);
 		$response = new Response();
-		$response->setStatusCode(500);
+		$response->setStatusCode($code);
 		$response->send("</br><b>$message</b> in file ".$this->getFile().' on line '.$this->getLine()."\n".preg_replace('/#/','</br>#',$this->getTraceAsString()));
 		exit();
     }

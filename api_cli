@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
- use \App\Services\DB\DB;
-  use \App\Services\Console\Command\Command;
+
+ use \App\Services\Console\Commands\Commands;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +16,7 @@
 */
 require __DIR__.'/init.php';
 
-$app = require_once __DIR__.'/bootstrap/app.php';
-$command = new Command();
+$command = new Commands();
 foreach ($argv as $i=>$arg )
 {
 	if ($arg === 'migrate') {

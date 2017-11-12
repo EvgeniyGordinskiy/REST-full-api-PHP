@@ -3,7 +3,7 @@ namespace App\Services\Permissions;
 
 use App\Services\Http\Request\Request;
 
-class Admin
+class Admin implements IPermission
 {
 	public function __construct()
 	{

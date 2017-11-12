@@ -1,9 +1,9 @@
 <?php
 return[
  'auth' => function(){
-          return (new \App\Services\Permissions\Auth())->check();
+          return (new \App\Services\Permissions\Auth());
     },
  'admin' => function(){
-          return (new \App\Services\Permissions\Admin())->check();
+          return (new \App\Services\Permissions\Admin());
     }
 ];
