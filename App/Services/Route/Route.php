@@ -13,20 +13,38 @@ class Route
 	private $parentRoute;
 	private $parentChild;
 	private $parentPermission;
-	private static $currentRoute;
+	private static $_state;
+	public static $currentRoute;
+	public static $all_routes;
 
 
-    public function __construct()
+    private function __construct()
     {
-	    $routes = require_once config('app', 'app_routes');
-	    $this->filter = new Filter();
-
-	    foreach ($routes as $route) {
-		    $this->parentRoute = '';
+		$routes = require_once config('app', 'app_routes');
+		$this->filter = new Filter();
+		foreach ($routes as $route) {
+			$this->parentRoute = '';
 			$this->merge_routes($route, true);
-	    }
+		}
+		self::$all_routes = $this->routes;
     }
 
+	public static function create()
+    {
+		return self::getState();
+    }
+
+	/**
+	 * If !self::$_state,
+	 * creating new instance of the connect current Data Base and create new self.
+	 */
+	private static function getState()
+	{
+		if (!self::$_state) {
+			self::$_state =	new self();
+		}
+		return self::$_state;
+	}
     private function merge_routes($route, $parent = [])
     {
 		$this->filter->transform($route);
@@ -55,8 +73,10 @@ class Route
 	    } elseif ( $route['path'] && $route['obj'] ) {
 			$this->parentRoute['path'] = $url = $this->parentRoute['path'].$route['path'];
 			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
+			$desc = $route['desc'] ?? $this->parentRoute['desc'] ?? '';
 			$this->routes[$url] = $this->parentRoute;
 			$this->routes[$url]['component'] = $component;
+			$this->routes[$url]['desc'] = $desc;
 		}
 
 		if ( key_exists('child', $route) ) {
@@ -106,4 +126,14 @@ class Route
 			}
 		}
     }
+
+
+	private function __clone()
+	{
+	}
+
+	private function __wakeup()
+	{
+	}
+
 }

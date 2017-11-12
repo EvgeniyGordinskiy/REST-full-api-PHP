@@ -3,7 +3,7 @@ use \App\Services\Route\Route;
 use \App\Services\Http\Request\Request;
 
 $request = (new Request())->server->getRequestTarget();
-$router = new Route();
+$router = Route::create();
 
 if ( $currentRoute = $router->parseRoute($request) ) {
 	$HasPermission = \App\Services\Permissions\Permission::checkPermissions($currentRoute);

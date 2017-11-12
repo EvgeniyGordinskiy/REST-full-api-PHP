@@ -3,17 +3,21 @@
 namespace App\Services\Hypermedia\Hal;
 
 use App\Services\Hypermedia\Hypermedia;
+use App\Services\Route\Route;
 
 class Hal implements Hypermedia
 {
-    public function create($message, $status, $object)
+    public function create($class)
     {
-        dd($object);
-        // TODO: Implement create() method.
+        $routes = Route::$all_routes;
+        if ( is_array($routes) ) {
+            foreach ($routes as $route) {
+                if (strstr($route['obj'], '@', true) === $class) {
+                    dd($route);
+                }
+            }
+
+        }
     }
-    
-    public function send()
-    {
-        // TODO: Implement send() method.
-    }
+
 }

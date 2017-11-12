@@ -16,12 +16,9 @@ class UserController extends BaseController
 
     public function index($id = false)
     {
-        $this->send('sdf');
         $users = User::getClients();
-        $response = new Response();
-        $response->setStatusCode(200);
-        $response->write(...$users);
-        $response->send();
+        $this->send($users);
+
     }
 
     public function all()
