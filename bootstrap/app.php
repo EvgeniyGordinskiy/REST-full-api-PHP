@@ -2,10 +2,12 @@
 use \App\Services\Route\Route;
 use \App\Services\Http\Request\Request;
 
-$request = (new Request())->server->getRequestTarget();
+$request = new Request();
+$query = $request->server->getRequestTarget();
+$method = $request->server->getMethod();
 $router = Route::create();
 
-if ( $currentRoute = $router->parseRoute($request) ) {
+if ( $currentRoute = $router->parseRoute($query, $method) ) {
 	$HasPermission = \App\Services\Permissions\Permission::checkPermissions($currentRoute);
 } else {
 	throw new \App\Services\Exceptions\RouteException('Route not found', 404);

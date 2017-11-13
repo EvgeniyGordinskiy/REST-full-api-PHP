@@ -73,10 +73,12 @@ class Route
 	    } elseif ( $route['path'] && $route['obj'] ) {
 			$this->parentRoute['path'] = $url = $this->parentRoute['path'].$route['path'];
 			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
-			$desc = $route['desc'] ?? $this->parentRoute['desc'] ?? '';
+			$desc = $route['desc'] ?? '';
+			$method = $route['method'] ?? '';
 			$this->routes[$url] = $this->parentRoute;
 			$this->routes[$url]['component'] = $component;
 			$this->routes[$url]['desc'] = $desc;
+			$this->routes[$url]['method'] = $method;
 		}
 
 		if ( key_exists('child', $route) ) {
@@ -91,7 +93,7 @@ class Route
 		}
     }
 
-    public function parseRoute($route)
+    public function parseRoute($route, $method)
     {
 	    $route = preg_replace('/[^a-zA-Z0-9\/_-]+/', '', $route);
 
@@ -102,7 +104,8 @@ class Route
 
 		$cleanRoutes = $this->routes;
 		foreach ($cleanRoutes as $pattern => $value) {
-			if ( preg_match("/^$pattern$/i", $route) ) {
+			if ( preg_match("/^$pattern$/i", $route)
+				&& (strcasecmp($value['method'], $method) === 0)) {
 				$value['pattern'] = $pattern;
 				self::$currentRoute = $value;
 				return $value;
