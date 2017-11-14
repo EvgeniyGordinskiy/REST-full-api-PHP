@@ -19,7 +19,7 @@ return
 
 				],
 				[
-				 	'path'       => '/{id}/post/{post_id}',
+				 	'path'       => '/post/{post_id}',
 					'obj'        => 'UserController@getPost',
 					'method'	 => 'get',
 					'filter'     => 'UserWithPost',
