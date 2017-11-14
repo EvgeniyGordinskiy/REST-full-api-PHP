@@ -20,7 +20,11 @@ class Commands
 					
 					try {
 						$exec = DB::exec($sql);
+						$newMigration = DB::exec('insert into migrations (name) values (?)', [$migration]);
+						$newMigration->bindValue(1,$migration, \PDO::PARAM_STR);
+						$newMigration->execute();
 					} catch (\Throwable $e) {
+
 						fwrite(STDOUT, "\033[0m $e" . PHP_EOL);
 					}
 
@@ -44,12 +48,8 @@ class Commands
 		if (count($stmt->fetchAll()) > 0) {
 			$result = DB::exec('select * from migrations where name = "' .$migration .'"');
 			if (count($result->fetchAll()) === 0 && $migration !== '0 migrations.php') {
-				$newMigration = DB::exec('insert into migrations (name) values (?)', [$migration]);
-				$newMigration->bindValue(1,$migration, \PDO::PARAM_STR);
-				$newMigration->execute();
-				if ( $newMigration ) {
-					return true;
-				}
+
+				return true;
 			} else {
 				fwrite(STDOUT, "\033[33m migration $migration all ready exist" . PHP_EOL);
 				fwrite(STDOUT, "\033[0m " . PHP_EOL);
