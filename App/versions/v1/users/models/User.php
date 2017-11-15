@@ -11,6 +11,12 @@ class User extends Model
 		$sql = DB::exec("Select * from users");
 		return $sql->fetchAll(\PDO::FETCH_ASSOC);
 	}
+	
+	public static function getClient($id)
+	{
+		$sql = DB::exec("Select * from users where id = $id");
+		return $sql->fetchAll(\PDO::FETCH_ASSOC);
+	}
 
 	public static function postClient()
 	{

@@ -16,9 +16,12 @@ class UserController extends BaseController
 
     public function index($id = false)
     {
-        $users = User::getClients();
-        $this->send($users);
-
+        if( !$id ) {
+            $result = User::getClients();
+        }
+        $result = User::getClient($id);
+        
+        $this->send($result);
     }
 
     public function all()

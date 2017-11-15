@@ -76,10 +76,12 @@ class Route
 			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
 			$desc = $route['desc'] ?? '';
 			$method = $route['method'] ?? '';
+			$filter = $route['filter'] ?? '';
 			$this->routes[$url] = $this->parentRoute;
 			$this->routes[$url]['component'] = $component;
 			$this->routes[$url]['desc'] = $desc;
 			$this->routes[$url]['method'] = $method;
+			$this->routes[$url]['filter'] = $filter;
 		}
 
 		if ( key_exists('child', $route) ) {
@@ -97,7 +99,6 @@ class Route
     public function parseRoute($route, $method)
     {
 	    $route = preg_replace('/[^a-zA-Z0-9\/_-]+/', '', $route);
-
 	    if ( array_key_exists($route, $this->routes) ) {
 		    self::$currentRoute = $this->routes[$route];
 		    return $this->routes[$route];
@@ -105,10 +106,15 @@ class Route
 
 		$cleanRoutes = $this->routes;
 		foreach ($cleanRoutes as $pattern => $value) {
-			if ( preg_match("/^$pattern$/i", $route)
+			if ( preg_match("/^$pattern$/i", $route, $matches)
 				&& (strcasecmp($value['method'], $method) === 0)) {
+				unset($matches[0]);
+
 				$value['pattern'] = $pattern;
 				self::$currentRoute = $value;
+				foreach ($matches as $match) {
+					self::$currentRoute['values'][] = $match;
+				}
 				return $value;
 			}
 		}
@@ -124,7 +130,14 @@ class Route
 			try {
 				$newClass = 'App\\versions\\v' . self::$currentRoute['version'] ."\\". self::$currentRoute['component'] . '\\controllers\\' . $file;
 				$object = new $newClass();
-				call_user_func_array([$object, $method], []);
+				$values = [];
+				if ( isset(self::$currentRoute['values']) ) {
+					$values = self::$currentRoute['values'];
+				}
+				if ( self::$currentRoute['filter'] ) {
+					
+				}
+				call_user_func_array([$object, $method], $values);
 				}catch (\Exception $e) {
 					throw new BaseException($e->getMessage());
 			}

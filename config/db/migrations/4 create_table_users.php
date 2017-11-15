@@ -3,7 +3,7 @@
 return	'
         create table if not EXISTS users 
         ( 
-            id INTEGER auto_increment PRIMARY KEY,
+            id INTEGER unsigned auto_increment PRIMARY KEY,
             name CHAR(100),
             email CHAR(100) UNIQUE,
             password CHAR(100),

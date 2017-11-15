@@ -12,8 +12,9 @@ return
 			'child'      => [
 				[
 					'path'       => '/{id}',
-					'obj'        => 'UserController@get',
+					'obj'        => 'UserController@index',
 					'method'	 => 'get',
+					'filter'	 => 'indexFilter',
 					'desc'		 => 'Get user by id',
 					'permission' => ['auth', 'auth'],
 

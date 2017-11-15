@@ -57,7 +57,7 @@ class Filter implements IFilter
 	 */
 	public function url($url)
 	{
-		return preg_replace(['/{(.*?)}/', '/\//'], ['[a-zA-Z0-9]+', '\/'] ,$url);
+		return preg_replace(['/{(.*?)}/', '/\//'], ['([a-zA-Z0-9]+)', '\/'] ,$url);
 	}
 
 
