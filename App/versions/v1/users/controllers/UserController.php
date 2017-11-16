@@ -20,7 +20,7 @@ class UserController extends BaseController
      * if id is false, get all clients, else get client by id.
      * @param integer $id
      */
-    public function index(int $id = false)
+    public function index(int $id = NULL)
     {
         if( !$id ) {
             $result = User::getClients();

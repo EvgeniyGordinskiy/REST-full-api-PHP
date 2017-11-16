@@ -9,6 +9,10 @@ class indexFilter implements IFilter
     public function run($parameters)
     {
         $user_id = intval($parameters[0]);
-        return  is_int($user_id);
+        
+        if ( is_int($user_id) ) {
+            return [$user_id];
+        }
+        return  false;
     }
 }

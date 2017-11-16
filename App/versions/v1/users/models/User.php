@@ -18,10 +18,10 @@ class User extends Model
 
 	/**
 	 * Get client by id.
-	 * @param $id
+	 * @param int $id
 	 * @return array
 	 */
-	public static function getClient(integer $id) : array
+	public static function getClient(int $id) : array
 	{
 		$sql = DB::exec("Select * from users where id = $id");
 		return $sql->fetchAll(\PDO::FETCH_ASSOC);

@@ -135,12 +135,14 @@ class Route
 				$values = [];
 				if ( isset(self::$currentRoute['values']) ) {
 					$values = self::$currentRoute['values'];
-				}
-				if ( self::$currentRoute['filter'] ) {
-					if ($cleanValues = Filter::filterInputValues(self::$currentRoute)) {
-						self::$currentRoute['values'] = $cleanValues;
+
+					if ( self::$currentRoute['filter'] ) {
+						if ($cleanValues = Filter::filterInputValues(self::$currentRoute)) {
+							$values = $cleanValues;
+						}
 					}
 				}
+					
 				call_user_func_array([$object, $method], $values);
 				}catch (\Exception $e) {
 					throw new BaseException($e->getMessage());
