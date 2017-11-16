@@ -5,7 +5,7 @@ return
 			'path'       => '/user',
 			'obj'        => 'UserController@index',
 			'method'	 => 'get',
-			'filter'     => 'UserFilter',
+			'filter'     => 'indexFilter',
 			'component'  => 'users',
 			'desc'		 => 'Get all users',
 			'version'    => 1.0,
@@ -18,24 +18,6 @@ return
 					'desc'		 => 'Get user by id',
 					'permission' => ['auth', 'auth'],
 
-				],
-				[
-				 	'path'       => '/post/{post_id}',
-					'obj'        => 'UserController@getPost',
-					'method'	 => 'get',
-					'filter'     => 'UserWithPost',
-					'desc'		 => 'Get users post by id',
-					'child'      => [
-						[
-							'path'       => '/delete',
-							'obj'        => 'PostController@delete',
-							'method'	 => 'delete',
-							'permission' => ['admin', 'auth', 'auth'],
-							'desc'		 => 'Delete users post by id',
-							'component'     => 'posts',
-							'version'    => 2
-						]
-					]
-				],
+				]
 			]
 	];

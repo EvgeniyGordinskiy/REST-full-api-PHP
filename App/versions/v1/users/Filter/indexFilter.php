@@ -1,6 +1,6 @@
 <?php
 
-namespace App\versions\v1\users\Filters;
+namespace App\versions\v1\users\Filter;
 
 use App\Services\Filter\IFilter;
 
@@ -8,6 +8,7 @@ class indexFilter implements IFilter
 {
     public function run($parameters)
     {
-        return  is_int($parameters[0]);
+        $user_id = intval($parameters[0]);
+        return  is_int($user_id);
     }
 }

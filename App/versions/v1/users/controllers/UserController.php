@@ -14,18 +14,17 @@ class UserController extends BaseController
 
     }
 
-    public function index($id = false)
+    /**
+     * if id is false, get all clients, else get client by id.
+     * @param integer $id
+     */
+    public function index(int $id = false)
     {
         if( !$id ) {
             $result = User::getClients();
         }
         $result = User::getClient($id);
-        
         $this->send($result);
     }
-
-    public function all()
-    {
-       
-    }
+    
 }

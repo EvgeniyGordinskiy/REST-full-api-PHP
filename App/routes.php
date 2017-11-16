@@ -2,6 +2,7 @@
 
 $users = require SITE_ROOT.'/App/versions/v1/users/routes.php';
 $posts = require SITE_ROOT.'/App/versions/v1/posts/routes.php';
+$usersPosts = require SITE_ROOT.'/App/versions/v1/usersPost/routes.php';
 return
 [
 	 [
@@ -10,6 +11,8 @@ return
 		'child'      => [
 			$users,
 			$posts,
+			$usersPosts
+
 		]
 	],
 ];

@@ -3,8 +3,9 @@ namespace App\Services\Route\Routes_filter;
 
 use App\Services\Exceptions\FilterException;
 use App\Services\Exceptions\RouteException;
+use App\Services\Filter\IFilter;
 
-class Filter implements IFilter
+class Filter implements IRoutes_Filter
 {
 	private $routeUrl;
 	private $rows;
@@ -192,5 +193,20 @@ class Filter implements IFilter
 		}
 
 		return true;
+	}
+	
+	public static function filterInputValues(array $currentRoute)
+	{
+		$filter = 'App\\versions\\v' . $currentRoute['version'] ."\\". $currentRoute['component'] . '\\Filter\\' . $currentRoute['filter'];
+		$filer_object = new $filter();
+		if ($filer_object instanceof IFilter) {
+			if (! ($values = call_user_func_array([$filer_object, 'run'], [$currentRoute['values']])) ) {
+				throw new FilterException('Invalid input values');
+			} else {
+				return $values;
+			}
+		} else {
+			throw new FilterException('Filter must been instanceof IFilter');
+		}
 	}
 }

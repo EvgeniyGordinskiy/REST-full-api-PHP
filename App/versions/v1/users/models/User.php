@@ -6,18 +6,30 @@ use App\Services\DB\DB;
 
 class User extends Model
 {
-	public static function getClients()
+	/**
+	 * Get all clients
+	 * @return array
+	 */
+	public static function getClients() : array
 	{
 		$sql = DB::exec("Select * from users");
 		return $sql->fetchAll(\PDO::FETCH_ASSOC);
 	}
-	
-	public static function getClient($id)
+
+	/**
+	 * Get client by id.
+	 * @param $id
+	 * @return array
+	 */
+	public static function getClient(integer $id) : array
 	{
 		$sql = DB::exec("Select * from users where id = $id");
 		return $sql->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
+	/**
+	 * Create new client.
+	 */
 	public static function postClient()
 	{
 		$client = [

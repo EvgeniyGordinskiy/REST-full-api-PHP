@@ -1,7 +1,9 @@
 <?php
 namespace App\Services\Route;
 use App\Services\Exceptions\BaseException;
+use App\Services\Exceptions\FilterException;
 use App\Services\Exceptions\RouteException;
+use App\Services\Filter\IFilter;
 use App\Services\Permissions\Permission;
 use App\Services\Route\Routes_filter\Filter;
 
@@ -135,7 +137,9 @@ class Route
 					$values = self::$currentRoute['values'];
 				}
 				if ( self::$currentRoute['filter'] ) {
-					
+					if ($cleanValues = Filter::filterInputValues(self::$currentRoute)) {
+						self::$currentRoute['values'] = $cleanValues;
+					}
 				}
 				call_user_func_array([$object, $method], $values);
 				}catch (\Exception $e) {
