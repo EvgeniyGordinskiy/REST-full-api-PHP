@@ -9,9 +9,11 @@ class UserController extends BaseController
 {
     private $request;
 
+    /**
+     * UserController constructor.
+     */
     public function __construct ()
     {
-
     }
 
     /**
