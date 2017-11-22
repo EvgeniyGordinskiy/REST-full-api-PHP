@@ -1,0 +1,107 @@
+@import './../../../assets/stylus/_settings'
+
+.el-card{
+    background:transparent card-bg-image;
+    border:0px;
+    box-shadow:none;
+    cursor:pointer;
+    color:text-dark-color;
+    margin:cards-margin;
+    width 100%
+    -webkit-transition-property: all; /* Safari */
+    -webkit-transition-duration: transition-time; /* Safari */
+    transition-property: all;
+    transition-duration: transition-time;
+    &:hover{
+        background:card-bg-hover-color;
+        background-image:none;
+        color:text-light-color;
+        .cardTitle {
+            color:text-light-color;
+        }
+        .cardinnerBox{
+            background-color primary-color-dark
+        }
+    }
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid gray-color;
+        margin: 0 0 2rem 0;
+        padding: 0;
+        background: none;
+    }
+}
+
+.cardTitle{
+    font-size:1.79rem;
+    margin-top:0px;
+    margin-bottom:5px;
+    font-family:light-font;
+    word-break: break-word;
+}
+
+.cardLabel{
+    font-size: 1.143rem;
+    &.cardLabel--small{
+        font-size: 1rem;
+    }
+}
+
+.cardContent{
+    font-size:1.57rem;
+    font-family:bold-font;
+    &.cardContent--small{
+        font-size: 1rem;
+    }
+}
+
+.cardBadge{
+    margin-left:10px;
+    font-size:0.71rem;
+    color:text-light-color;
+    text-transform uppercase
+    text-align:center;
+    padding:0.14rem 1.07rem;
+    border-radius: 3px;
+    background:badge-color;
+}
+
+.cardinnerBox{
+    background:gray-color;
+    padding:10px 15px;
+    border-radius: 3px;
+    margin-top:10px;
+    &>*{
+        margin-bottom 10px
+    }
+    &>*:last-child{
+        margin-bottom 0
+    }
+}
+
+.cardinnerBox i,.optionBox i{
+    display:inline-block;
+    width:1.07rem;
+    text-align:center;
+    font-size:1.143rem;
+}
+
+.card-yellow {
+    background-color: #FED833;
+}
+.card-red {
+    background-color: #fb7245;
+}
+.card-green {
+    background-color: #a4ce62;
+}
+
+@media(min-width desktop-breakpoint)
+    .el-card
+        width 'calc(50% - (%s * 2))' % cards-margin
+        
+@media(min-width largescreen-breakpoint)
+    .el-card
+        width 'calc(25% - (%s * 2))' % cards-margin

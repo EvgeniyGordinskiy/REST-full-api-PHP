@@ -1,0 +1,21 @@
+<el-dialog
+        :title = "title"
+        :visible.sync="show"
+        size="tiny"
+        :before-close="cancelForm"
+       >
+    <formv
+            :save="Submit"
+            :form="form"
+            btn-text="Login"
+    >
+    </formv>
+<span slot="footer" class="dialog-footer">
+     <el-button
+             type="submit"
+             icon="check"
+             @click="onSubmit(modalForm)"
+     >
+     </el-button>
+</span>
+</el-dialog>

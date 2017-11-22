@@ -1,0 +1,21 @@
+<div class="main-body">
+  <el-row :gutter="10">
+    <el-col  :xs="24" :sm="24" :md="8" :lg="8">
+      <h1 class="pageTitle"><i class="fa fa-users" aria-hidden="true"></i>Clients</h1>
+    </el-col>
+  </el-row>
+  <div v-if="loading"><br><br></div>
+  <div v-else class="flex stretch wrap">
+    <cardv
+            v-for="client in clients"
+            :key="client.id"
+            @click.native="editClient(client)"
+    >
+
+      <h2 class="cardTitle"> {{ client.name }} </h2>
+      <hr>
+      <label class="cardLabel">Email: </label><span class="cardContent">{{ client.email }}</span>
+
+    </cardv>
+  </div>
+</div>

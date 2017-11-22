@@ -1,0 +1,15 @@
+<div class="content login-wrapper">
+    <div class="content-inner loginBox">
+      <formv
+              :save="login"
+              :form="form"
+              btn-text="Login"
+      >
+      </formv>
+      <el-row class="forgot-password">
+      <router-link class="buttons_login" :to="{ name: 'home'}">New User</router-link>
+      &nbsp;|&nbsp;
+      <router-link class="buttons_login" :to="{ name: 'home'}">Forgot password</router-link>
+     </el-row>
+   </div>
+</div>

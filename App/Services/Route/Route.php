@@ -134,6 +134,7 @@ class Route
 				$object = new $newClass();
 				$values = [];
 				if ( isset(self::$currentRoute['values']) ) {
+					
 					$values = self::$currentRoute['values'];
 
 					if ( self::$currentRoute['filter'] ) {

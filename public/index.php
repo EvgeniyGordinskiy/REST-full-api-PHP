@@ -13,8 +13,11 @@ set_error_handler(function( $num, $str, $file, $line, $context ) {
 
 	return false;
 });
-
-require  "../init.php";
+$page = file_get_contents('Frontend/index.html');
+echo $page;
+if ( isset($_SERVER['HTTP_X_REQUESTED_WITH']) ) {
+	require  "../init.php";
+}
 
 
 

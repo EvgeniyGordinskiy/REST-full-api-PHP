@@ -1,0 +1,122 @@
+@import './../../../assets/stylus/_settings'
+
+.top-header
+    background: primary-color none repeat scroll 0 0;
+    color:text-light-color;
+    padding: 1.07rem;
+    width: 100%;
+    z-index: 1;
+    justify-content space-between
+
+.user-details, .top-menu
+    width 100%
+
+.top-menu
+    text-align:center;
+    background:primary-color-medium;
+
+.top-menu .lang_
+    width 110px
+
+.top-menu{
+    .top-menu_item{
+        font-size:1.14rem;
+        border-left: 1px solid primary-color;
+        padding .7rem
+        &.lang_{
+            padding .2rem
+        }
+    }
+    a {
+        color:text-light-color;
+        text-decoration:none;
+        &hover{
+            color:header-icon-active-color;
+        }
+    }
+    .el-select input{
+        background:none;
+        border:0px;
+        color:text-light-color;
+        font-size:1.14rem;
+    }
+    .el-select input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+        color: text-light-color;
+    }
+    .el-select input::-moz-placeholder { /* Firefox 19+ */
+    color: text-light-color;
+    }
+    .el-select input:-ms-input-placeholder { /* IE 10+ */
+        color: text-light-color;
+    }
+    .el-select input:-moz-placeholder { /* Firefox 18- */
+        color: text-light-color;
+    }
+}
+.user-details{
+    padding-bottom: 1.5rem;
+    .user-avatar{
+        border-radius: 50%;
+        display: inline-block;
+        height: 48px;
+        overflow: hidden;
+        width: 48px;
+        float:left;
+        margin-right:25px;
+        margin-left:25px;
+
+        img {
+        width: 50px;
+        }
+    }
+    .username{
+        font-size:1.43rem;
+        text-transform:uppercase;
+        float:left;
+        line-height: 1.43rem;
+        font-family:regular-font;
+        margin-top:4px;
+        margin-right:10px;
+    }
+    .username em{
+        font-style:normal!important;
+        font-size: .93rem;
+        padding-top: 6px;
+        text-transform:none;
+        display:block;
+        font-family:light-font;
+        color:#92a8b3;
+        line-height:1rem;
+    }
+    .userType{
+        float:left;
+        margin-top:10px;
+    }
+}
+.userType{
+    text-transform:uppercase;
+    font-size:.93rem;
+    color:text-light-color;
+    line-height:.8rem;
+    padding:5px 10px;
+    background:#ff6c60;
+    border-radius:3px;
+}
+
+.logoutBtn{
+    margin-top: 10px;
+    padding: 8px;
+}
+@media(min-width desktop-breakpoint)
+    .top-header
+        padding: 1.07rem 0;
+
+    .user-details, .top-menu
+        width auto
+    .top-menu
+        background:transparent;
+        .top-menu_item
+            padding-left: 25px;
+            padding-right: 25px;
+    .user-details
+        padding-bottom 0
