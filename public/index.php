@@ -8,15 +8,18 @@ set_error_handler(function( $num, $str, $file, $line, $context ) {
 
 	// Catch notices and warnings
 	if ($num === 8 || $num === 2) {
-		new \App\Services\Log\Log(false, $str, $file, $line);
+		$log = require('..\App\Services\Log\Log.php');
+		new $log(false, $str, $file, $line);
 	}
 
 	return false;
 });
-$page = file_get_contents('Frontend/index.html');
-echo $page;
-if ( isset($_SERVER['HTTP_X_REQUESTED_WITH']) ) {
+
+if ( isset($_SERVER['CONTENT_TYPE']) && (preg_match('/application\/json/', $_SERVER['CONTENT_TYPE']) === 1)) {
 	require  "../init.php";
+} else {
+	$page = file_get_contents('Frontend/index.html');
+	echo $page;
 }
 
 

@@ -12,7 +12,7 @@ let mix = require('laravel-mix');
  */
 
 mix.js('public/Frontend/src/main.js', 'public/js/');
-// mix.stylus('public/Frontend/src/assets/stylus/app.styl', 'public/css/');
+mix.stylus('public/Frontend/src/assets/stylus/app.styl', 'public/css/');
 
 // Full API
 // mix.js(src, output);
