@@ -1,4 +1,5 @@
 {
-    "/clients.js": "/clients.js",
-    "/public/js/main.js": "/public/js/main.js"
+    "/public/js/main.js": "/public/js/main.js",
+    "/public/js/vendor.js": "/public/js/vendor.js",
+    "/public/js/manifest.js": "/public/js/manifest.js"
 }

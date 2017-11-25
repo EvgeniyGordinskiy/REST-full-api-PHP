@@ -106,7 +106,7 @@ Vue.$http = Axios;
  *
  * http://stylus-lang.com/
  */
-// require('./assets/stylus/app.styl');
+// require('./assets/stylus/base.styl');
 
 /* ============
  * Vuex Router Sync

@@ -11,4 +11,7 @@ export default {
   components: {
     layoutv: LayoutV,
   },
+  created() {
+    console.log('navigation.js');
+  },
 };

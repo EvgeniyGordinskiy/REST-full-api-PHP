@@ -1,1 +1,0 @@
-<script src="./loginUsingToken.js"></script>

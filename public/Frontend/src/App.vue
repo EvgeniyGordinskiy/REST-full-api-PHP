@@ -1,3 +1,4 @@
+<style src="./assets/stylus/base.styl" lang="stylus"></style>
 <template>
     <router-view></router-view>
 </template>
