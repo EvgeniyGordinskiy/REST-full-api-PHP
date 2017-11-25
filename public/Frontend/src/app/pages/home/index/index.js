@@ -33,12 +33,12 @@ export default {
          */
         login() {
             console.log('login');
-            // this.form.loading = true;
-            // auth.login(this.form.data())
-            //     .catch((errors) => {
-            //         this.form.loading = false;
-            //         this.form.recordErrors(errors);
-            //     });
+            this.form.loading = true;
+            auth.login(this.form.data())
+                .catch((errors) => {
+                    this.form.loading = false;
+                    this.form.recordErrors(errors);
+                });
         },
     },
 
