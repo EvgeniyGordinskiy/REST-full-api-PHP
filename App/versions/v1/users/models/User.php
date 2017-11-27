@@ -12,8 +12,8 @@ class User extends Model
 	 */
 	public static function getClients() : array
 	{
-		$sql = DB::exec("Select * from users");
-		return $sql->fetchAll(\PDO::FETCH_ASSOC);
+		$sql = DB::select("Select * from users");
+		return $sql;
 	}
 
 	/**
@@ -23,8 +23,8 @@ class User extends Model
 	 */
 	public static function getClient(int $id) : array
 	{
-		$sql = DB::exec("Select * from users where id = $id");
-		return $sql->fetchAll(\PDO::FETCH_ASSOC);
+		$sql = DB::select("Select * from users where id = $id");
+		return $sql;
 	}
 
 	/**

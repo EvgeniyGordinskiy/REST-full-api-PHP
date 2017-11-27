@@ -26,6 +26,13 @@ class DB {
 	{
 	}
 
+	private function __call($method, $parameters)
+	{
+		if ( method_exists($this, $method) ) {
+			$this->$method($parameters);
+		}
+	}
+
 	/**
 	 * If !self::$_state,
 	 * creating new instance of the connect current Data Base and create new self.
@@ -42,24 +49,47 @@ class DB {
 	/**
 	 * Execute sql. If $param not empty - binding before.
 	 * @param string $sql
-	 * @param array $param
 	 * @return bool or \PDOStatement
 	 */
-	public static function exec($sql = '', array $param = []) : \PDOStatement
+	public static function select($sql = '') : \PDOStatement
 	{
 	   self::getState();
 		
 	    if ($sql){
 	        try {
 		        $stmt = self::$_state->prepare($sql);
-		        if ( !$param ) {
-			        $stmt->execute();
-		        }
-		        return $stmt;
+			    $stmt->execute();
+		        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	        } catch (\PDOException $e) {
 		        new BaseException($e->getMessage());
 	        }
         }
         return false;
+    }
+
+    public static function prepare($sql = '') : \PDOStatement
+	{
+	   self::getState();
+
+	    if ($sql){
+	        try {
+		        $stmt = self::$_state->prepare($sql);
+	        } catch (\PDOException $e) {
+		        new BaseException($e->getMessage());
+	        }
+        }
+        return false;
+    }
+
+    public function bind ($property, $variable)
+    {
+	    self::$_state->bind($property, $variable);
+    }
+
+
+    public function exec ()
+    {
+	    $stmt = self::$_state->execute();
+	    return $stmt;
     }
 }
