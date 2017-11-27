@@ -39,4 +39,27 @@ class Request
 		}
 		return null;
 	}
+
+	/**
+	 * Check if reauest method is post
+	 * @return bool
+	 */
+	public static function isPost(): bool
+	{
+		return $_SERVER['REQUEST_METHOD'] === 'POST';
+	}
+
+	/**
+	 * Get post valueses
+	 * @return bool|mixed
+	 */
+	public static function getPost()
+	{
+		$input = file_get_contents("php://input");
+		if ($input) {
+			return json_decode($input, true);
+		}
+
+		return false;
+	}
 }

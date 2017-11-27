@@ -4,6 +4,7 @@ use App\Services\Exceptions\BaseException;
 use App\Services\Exceptions\FilterException;
 use App\Services\Exceptions\RouteException;
 use App\Services\Filter\IFilter;
+use App\Services\Http\Request\Request;
 use App\Services\Permissions\Permission;
 use App\Services\Route\Routes_filter\Filter;
 
@@ -133,17 +134,18 @@ class Route
 				$newClass = 'App\\versions\\v' . self::$currentRoute['version'] ."\\". self::$currentRoute['component'] . '\\controllers\\' . $file;
 				$object = new $newClass();
 				$values = [];
-				if ( isset(self::$currentRoute['values']) ) {
-					
+				if ( Request::isPost() ) {
+					$values = Request::getPost();
+				} elseif ( isset(self::$currentRoute['values']) ) {
 					$values = self::$currentRoute['values'];
+				}
 
-					if ( self::$currentRoute['filter'] ) {
-						if ($cleanValues = Filter::filterInputValues(self::$currentRoute)) {
+				if ( self::$currentRoute['filter'] && $values) {
+						if ($cleanValues = Filter::filterInputValues(self::$currentRoute, $values)) {
 							$values = $cleanValues;
 						}
-					}
 				}
-					
+
 				call_user_func_array([$object, $method], $values);
 				}catch (\Exception $e) {
 					throw new BaseException($e->getMessage());

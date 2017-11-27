@@ -1,10 +1,10 @@
 <?php
-namespace App\Services\Auth;
+namespace App\Services\JWTAuth;
 
 use App\Services\Exceptions\JwtKeysUndefinedException;
 use Firebase\JWT\JWT;
 
-class Auth
+class JWTAuth
 {
 	protected $jwt;
 

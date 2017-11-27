@@ -194,16 +194,22 @@ class Filter implements IRoutes_Filter
 
 		return true;
 	}
-	
-	public static function filterInputValues(array $currentRoute)
+
+	/**
+	 * Filtered input values
+	 * @param array $currentRoute
+	 * @param array $inputValues
+	 * @return mixed
+	 */
+	public static function filterInputValues(array $currentRoute, array $inputValues)
 	{
-		$filter = 'App\\versions\\v' . $currentRoute['version'] ."\\". $currentRoute['component'] . '\\Filter\\' . $currentRoute['filter'];
+		$filter = 'App\\versions\\v' . $currentRoute['version'] ."\\". $currentRoute['component'] . '\\filter\\' . $currentRoute['filter'];
 		$filer_object = new $filter();
 		if ($filer_object instanceof IFilter) {
-			if (! ($values = call_user_func_array([$filer_object, 'run'], [$currentRoute['values']])) ) {
+			if (! ($outputValues = call_user_func_array([$filer_object, 'run'], [$inputValues])) ) {
 				throw new FilterException('Invalid input values');
 			} else {
-				return $values;
+				return $outputValues;
 			}
 		} else {
 			throw new FilterException('Filter must been instanceof IFilter');

@@ -5,7 +5,7 @@ return
 		'path'       => '/auth',
 		'obj'        => 'AuthController@index',
 		'method'	 => 'post',
-		'filter'     => 'indexFilter',
+		'filter'     => 'IndexFilter',
 		'component'  => 'auth',
 		'desc'		 => 'Login or get current user',
 		'version'    => 1.0,

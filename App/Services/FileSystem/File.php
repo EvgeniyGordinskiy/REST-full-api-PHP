@@ -14,16 +14,18 @@ class File extends \SplFileObject
 	 */
 	public function __construct(string $file, string $open_mode, bool $use_include_path = false)
 	{
+
 		$path = dirname($file);
 		if (!is_dir($path)) {
 			$perm = substr(sprintf('%o', fileperms(dirname($path))), -3);
 			if ($perm != 777) {
-				@chmod(dirname($path), 0777);
+				chmod(dirname($path), 0777);
 			}
 			if (false === @mkdir($path, 0777, true)) {
 				throw new FileException(sprintf('Unable to create the "%s" directory', $path));
 			}
 		}
+
 		parent::__construct($file, $open_mode, $use_include_path);
 	}
 }

@@ -8,6 +8,7 @@ use PDO;
 class DB {
 
 	private static $_state;
+	private static $_stmt;
 	
 	/**
 	 * Initialize new PDO instance and set attributes. 
@@ -26,7 +27,7 @@ class DB {
 	{
 	}
 
-	private function __call($method, $parameters)
+	public function __call($method, $parameters = null)
 	{
 		if ( method_exists($this, $method) ) {
 			$this->$method($parameters);
@@ -51,7 +52,7 @@ class DB {
 	 * @param string $sql
 	 * @return bool or \PDOStatement
 	 */
-	public static function select($sql = '') : \PDOStatement
+	public static function select($sql = '')
 	{
 	   self::getState();
 		
@@ -67,13 +68,16 @@ class DB {
         return false;
     }
 
-    public static function prepare($sql = '') : \PDOStatement
+    public static function prepare($sql = '')
 	{
 	   self::getState();
 
 	    if ($sql){
 	        try {
 		        $stmt = self::$_state->prepare($sql);
+		        self::$_stmt = $stmt;
+		        return $stmt;
+
 	        } catch (\PDOException $e) {
 		        new BaseException($e->getMessage());
 	        }
@@ -81,15 +85,14 @@ class DB {
         return false;
     }
 
-    public function bind ($property, $variable)
-    {
-	    self::$_state->bind($property, $variable);
-    }
 
-
-    public function exec ()
+    public static function execute(array $params = null)
     {
-	    $stmt = self::$_state->execute();
-	    return $stmt;
+	    if ($params) {
+		   self::$_stmt->execute($params);
+	    } else {
+		    self::$_stmt->execute();
+	    }
+	    return self::$_stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
