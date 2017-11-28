@@ -15,7 +15,9 @@ export default {
           loading: false,
       };
   },
-
+  created() {
+    console.log(localStorage.getItem('id_token'));
+  },
   methods: {
       editClient(client) {
           console.log(client);
@@ -24,5 +26,4 @@ export default {
   components: {
         cardv: cardv,
     },
-
 };

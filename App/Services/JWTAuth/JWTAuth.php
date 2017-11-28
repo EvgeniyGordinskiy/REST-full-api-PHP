@@ -58,7 +58,7 @@ class JWTAuth
 	}
 
 	/**
-	 * create payload from token
+	 * create payload from tok
 	 * @param string $token
 	 * @param array $allowed_algs
 	 * @return object

@@ -7,12 +7,9 @@ import store from './../../store';
  */
 const success = (token, resolve) => {
     store.dispatch('login', token);
-  accountService.find().then(() => {
     Vue.router.push({
-      name: 'clients',
+        name: 'clients',
     });
-    resolve();
-  });
 };
 
 /**
