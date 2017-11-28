@@ -10,8 +10,10 @@ class AuthController extends BaseController
 	public function index (string $email, string $password)
 	{
 		if ($user = AuthModel::checkUser($email, $password)) {
-			$jwt = new JWTAuth();
+			$jwt = new JWTAuth($user);
+			$token = $jwt->encode();
+			$this->send(['token' => $token]);
 		}
-		$this->send([]);
+		$this->sendWithError(401);
 	}
 }

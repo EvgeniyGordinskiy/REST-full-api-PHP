@@ -6,7 +6,7 @@ import store from './../../store';
  * When the request succeeds
  */
 const success = (token, resolve) => {
-  store.dispatch('login', token.token);
+    store.dispatch('login', token);
   accountService.find().then(() => {
     Vue.router.push({
       name: 'clients',
@@ -19,7 +19,7 @@ const success = (token, resolve) => {
  * When the request fails
  */
 const failed = (error, reject) => {
-  if (error.response === undefined) {
+  if (error.response.data.error.length === 0) {
     return reject({ error: ['Invalid credentials'] });
   }
   return reject(error.response.data);
@@ -27,12 +27,12 @@ const failed = (error, reject) => {
 
 export default user => (
   new Promise((resolve, reject) => {
-    Vue.$http.post('/auth', user)
+      Vue.$http.post('/auth', user)
              .then((response) => {
-               success(response.data, resolve);
+               success(response.data._links.items.token, resolve);
              })
              .catch((error) => {
-               failed(error, reject);
+                 failed(error, reject);
              });
   })
 );

@@ -32,10 +32,10 @@ export default {
          * Logs the user in
          */
         login() {
-            console.log('login');
             this.form.loading = true;
             auth.login(this.form.data())
                 .catch((errors) => {
+                    console.log(errors.error);
                     this.form.loading = false;
                     this.form.recordErrors(errors);
                 });
