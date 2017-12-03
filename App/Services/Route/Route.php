@@ -30,6 +30,7 @@ class Route
 			$this->merge_routes($route, true);
 		}
 		self::$all_routes = $this->routes;
+		
     }
 
 	public static function create()
@@ -50,6 +51,7 @@ class Route
 	}
     private function merge_routes($route, $parent = [])
     {
+
 		$this->filter->transform($route);
 
 	    if ( $parent ) {
@@ -74,8 +76,8 @@ class Route
 			$this->routes[$url] = $this->parentRoute;
 		    array_shift($this->parentChild);
 	    } elseif ( $route['path'] && $route['obj'] ) {
-			$this->parentRoute['path'] = $url = $this->parentRoute['path'].$route['path'];
-			$this->parentRoute['api_path'] = $this->parentRoute['api_path'].$route['api_path'];
+			$this->parentRoute['path'] = $url =isset($this->parentRoute['path'])?$this->parentRoute['path'].$route['path']:$route['path'];
+			$this->parentRoute['api_path'] = isset($this->parentRoute['api_path'])?$this->parentRoute['api_path'].$route['api_path']:$route['api_path'];
 			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
 			$desc = $route['desc'] ?? '';
 			$method = $route['method'] ?? '';

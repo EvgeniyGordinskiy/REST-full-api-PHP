@@ -2,17 +2,17 @@
 
 return
 	[
-		'path'		=> '',
+		'path'		=> '/auth',
 		'child'		=> [
-			[	
-				'path'       => '/auth',
-				'obj'        => 'AuthController@index',
-				'method'	 => 'post',
-				'filter'     => 'IndexFilter',
-				'component'  => 'auth',
-				'desc'		 => 'Login or get current user',
-				'version'    => 1.0,
-			],
+//			[
+//				'path'       => '/login',
+//				'obj'        => 'AuthController@index',
+//				'method'	 => 'post',
+//				'filter'     => 'IndexFilter',
+//				'component'  => 'auth',
+//				'desc'		 => 'Login or get current user',
+//				'version'    => 1.0,
+//			],
 			[
 				'path'       => '/register',
 				'obj'        => 'AuthController@post',

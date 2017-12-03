@@ -39,7 +39,7 @@ trait ResponseTrait
     protected function _makeHypermedia(Hypermedia $hypermedia) : array 
     {
         $class = basename(str_replace('\\','/',get_class($this)));
-        return $hypermedia->create($class);
+        return [$class];
     }
 
 	/**

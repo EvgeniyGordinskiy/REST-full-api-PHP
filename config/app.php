@@ -21,5 +21,6 @@ return
 							'version',
 							'beforeRoute',
 							'afterRoute',
-						 ],
+	],
+	'session' => 'memchached',
 ];

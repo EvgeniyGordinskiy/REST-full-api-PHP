@@ -6,7 +6,7 @@ import store from './../../store';
 const success = (token, resolve) => {
   store.dispatch('login', token.token);
   Vue.router.push({
-    name: 'register.personalInfo',
+    name: '/',
   });
   resolve();
 };
@@ -23,6 +23,7 @@ export default user => (
         success(response.data, resolve);
       })
       .catch((error) => {
+        console.log(error);
         failed(error.response.data, reject);
       });
   })
