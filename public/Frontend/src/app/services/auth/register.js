@@ -5,7 +5,6 @@ import store from './../../store';
 
 const success = (token, resolve) => {
   store.dispatch('login', token.token);
-  accountService.find();
   Vue.router.push({
     name: 'register.personalInfo',
   });

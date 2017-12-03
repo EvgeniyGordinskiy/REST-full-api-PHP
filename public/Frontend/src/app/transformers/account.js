@@ -21,8 +21,6 @@ export default class AccountTransformer extends Transformer {
       email: account.email,
       password: account.password,
       passwordConfirmation: account.password_confirmation,
-      firstName: account.first_name,
-      lastName: account.last_name,
     };
   }
 

@@ -138,14 +138,15 @@ import VueRouter from 'vue-router';
 // eslint-disable-next-line
 import routes from './app/routes';
 // eslint-disable-next-line
-// import routeMidlleware from './app/route-middleware';
+import routeMidlleware from './app/route-middleware';
 
 Vue.use(VueRouter);
 
 export const router = new VueRouter({
   routes,
 });
-// router.beforeEach(routeMidlleware.beforeEach);
+
+router.beforeEach(routeMidlleware.beforeEach);
 
 VuexRouterSync.sync(store, router);
 

@@ -5,7 +5,8 @@
     "symfony/var-dumper": "3.4.*",
     "zendframework/zend-diactoros": "1.6.*",
     "php": ">=7.0",
-    "firebase/php-jwt": "^5.0"
+    "firebase/php-jwt": "^5.0",
+    "fzaninotto/faker": "^1.7"
   },
   "require-dev": {
     "phpseclib/phpseclib": "^2.0"

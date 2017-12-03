@@ -13,8 +13,6 @@
  */
 console.log('routes');
 
-import Home from './pages/home/index/index.vue';
-
 // eslint-disable-next-line
 export default [
 
@@ -22,9 +20,21 @@ export default [
   {
     path: '/home',
     name: 'home',
-    components: {
-      default: Home,
-    },
+    component: require('./pages/home/home.vue'),
+  },
+    
+  // Login page
+  {
+    path: '/login',
+    name: 'login',
+    component: require('./pages/login/login.vue'),
+  },
+    
+   // Register page 
+  {
+    path: '/register',
+    name: 'register',
+    component: require('./pages/register/register.vue'),
   },
   // Components with the navigation wrapper.
   {
@@ -34,14 +44,18 @@ export default [
       {
         path: '/clients',
         name: 'clients',
+        
         component: require('./pages/withNavigation/clients/index/index.vue'),
+        meta: {
+          auth: true,
+        },
         children: [
         ],
-      },
-      {
-        path: '/*',
-        redirect: '/home',
-      },
+      }
     ],
+  },
+  {
+    path: '/*',
+    redirect: '/home',
   },
 ];
