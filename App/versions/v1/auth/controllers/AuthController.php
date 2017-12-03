@@ -10,26 +10,17 @@ class AuthController extends BaseController
 	public function index (string $email, string $password)
 	{
 		if ($user = AuthModel::checkUser($email, $password)) {
-			$jwt = new JWTAuth($user);
-			$private_token = $jwt->create_private_token();
-			$public_token = $jwt->create_public_token($private_token);
-			if (AuthModel::updateUserToken($private_token)) {
-				$this->send(['token' => $public_token]);
-			} else {
-				$this->sendWithError();
-			}
+				$this->send(['user' => $user]);
 		}
 		$this->sendWithError(401);
 	}
 
 
-	public function post (string $email, string $password)
+	public function post (string $name, string $email, string $password)
 	{
-		$user = AuthModel::checkUser($email, $password);
-		if ($user = AuthModel::checkUser($email, $password)) {
-			$jwt = new JWTAuth($user);
-			$token = $jwt->encode();
-			$this->send(['token' => $token]);
+		$register = AuthModel::register($name, $email, $password);
+		if ($register) {
+			$user = $this->index($email, $password);
 		}
 		$this->sendWithError(401);
 	}

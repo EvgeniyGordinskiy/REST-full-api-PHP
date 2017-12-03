@@ -2,7 +2,7 @@
 
 namespace App\Services\Exceptions;
 
-class FileException extends BaseException
+class AuthException extends BaseException
 {
  
 }

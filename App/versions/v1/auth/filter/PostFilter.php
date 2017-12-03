@@ -14,12 +14,17 @@ class PostFilter implements IFilter
         } else {
             throw new FilterException('Invalid e-mail address');
         }
+        if ( isset($parameters['name']) && is_string($parameters['name']) ) {
+            $name = $parameters['name'];
+        } else {
+            throw new FilterException('Invalid name');
+        }
         if ( isset($parameters['password']) && is_string($parameters['password'])) {
 
             if (isset($parameters['confirm_password']) && is_string($parameters['confirm_password'])) {
                 if ( strcasecmp($parameters['confirm_password'],$parameters['password']) ) {
                     $password = crypt($parameters['password'], 'sad$safe(*fevv*/e'.microtime());
-                    return  [$email, $password];
+                    return  [$name, $email, $password];
                 }
             } else {
                 throw new FilterException('Invalid confirm password');

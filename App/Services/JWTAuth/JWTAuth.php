@@ -23,7 +23,6 @@ class JWTAuth
 	{
 		$this->jwt = new JWT();
 		$this->payload = $payload;
-//		$private_key_path = config('app', 'jwt_private_key_file');
 
 	}
 
@@ -75,9 +74,9 @@ class JWTAuth
 	 * @param null $head
 	 * @return string
 	 */
-	public function encode($alg = 'RS256', $keyId = null, $head = null) :string
+	public function encode($alg = 'RS256', $private_token, $keyId = null, $head = null) :string
 	{
-		$token = $this->jwt->encode($this->payload, $this->privateKey, $alg, $keyId, $head) ;
+		$token = $this->jwt->encode($this->payload, $private_token, $alg, $keyId, $head) ;
 		if ( !$token ) {
 			throw new JWTAuthException();
 		}
@@ -90,9 +89,9 @@ class JWTAuth
 	 * @param array $allowed_algs
 	 * @return object
 	 */
-	public function decode(string $token, array $allowed_algs = array('RS256')) :object
+	public function decode(string $token, $public_token, array $allowed_algs = array('RS256')) :object
 	{
-		$payload = $this->jwt->decode($token, $this->publicKey, $allowed_algs);
+		$payload = $this->jwt->decode($token, $public_token, $allowed_algs);
 		if ( !$payload ) {
 			throw new JWTAuthException();
 		}
