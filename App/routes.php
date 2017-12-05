@@ -11,9 +11,9 @@ return
 		'name'      => 'interface',
 		'child'      => [
 			$auth,
-			$users,
-			$posts,
-			$usersPosts
+//			$users,
+//			$posts,
+//			$usersPosts
 
 		]
 	],

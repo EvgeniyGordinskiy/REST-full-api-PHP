@@ -5,6 +5,7 @@ use App\Services\Exceptions\FilterException;
 use App\Services\Exceptions\RouteException;
 use App\Services\Filter\IFilter;
 use App\Services\Http\Request\Request;
+use App\Services\Http\Response\Response;
 use App\Services\Permissions\Permission;
 use App\Services\Route\Routes_filter\Filter;
 
@@ -30,7 +31,6 @@ class Route
 			$this->merge_routes($route, true);
 		}
 		self::$all_routes = $this->routes;
-		
     }
 
 	public static function create()
@@ -73,20 +73,26 @@ class Route
 		    $route['permission'] = $this->parentPermission;
 		    $this->parentRoute = $route;
 		    $url = $this->parentRoute['path'];
+
 			$this->routes[$url] = $this->parentRoute;
 		    array_shift($this->parentChild);
 	    } elseif ( $route['path'] && $route['obj'] ) {
+
 			$this->parentRoute['path'] = $url =isset($this->parentRoute['path'])?$this->parentRoute['path'].$route['path']:$route['path'];
 			$this->parentRoute['api_path'] = isset($this->parentRoute['api_path'])?$this->parentRoute['api_path'].$route['api_path']:$route['api_path'];
 			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
 			$desc = $route['desc'] ?? '';
 			$method = $route['method'] ?? '';
 			$filter = $route['filter'] ?? '';
+			$object = $route['obj'] ?? '';
+			$version = $route['version'] ?? '';
 			$this->routes[$url] = $this->parentRoute;
 			$this->routes[$url]['component'] = $component;
 			$this->routes[$url]['desc'] = $desc;
 			$this->routes[$url]['method'] = $method;
 			$this->routes[$url]['filter'] = $filter;
+			$this->routes[$url]['obj'] = $object;
+			$this->routes[$url]['version'] = $version;
 		}
 
 		if ( key_exists('child', $route) ) {
@@ -98,6 +104,9 @@ class Route
 			foreach ($route['child'] as $key => $child) {
 				$this->merge_routes($child);
 			}
+		}else{
+			$position_last_slash = strripos($this->parentRoute['path'],'\/');
+			$this->parentRoute['path'] = substr($this->parentRoute['path'],0, $position_last_slash);
 		}
     }
 

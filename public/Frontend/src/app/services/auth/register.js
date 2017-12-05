@@ -5,9 +5,9 @@ import store from './../../store';
 
 const success = (token, resolve) => {
   store.dispatch('login', token.token);
-  Vue.router.push({
-    name: '/',
-  });
+  // Vue.router.push({
+  //   name: '/',
+  // });
   resolve();
 };
 

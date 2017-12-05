@@ -1,9 +1,10 @@
 <?php
 
 function dd ($var = false) {
-	ob_get_contents();
-	if ($var) {
-		dump($var);
+	if (!is_string($var)) {
+		(new App\Services\Http\Response\Response())->send(json_encode($var));
+	}else{
+		(new App\Services\Http\Response\Response())->send($var);
 	}
 	exit();
 }
