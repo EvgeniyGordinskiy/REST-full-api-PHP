@@ -46,27 +46,6 @@ class DB {
 		  	new self($connect);
 		}
 	}
-	
-	/**
-	 * Execute sql. If $param not empty - binding before.
-	 * @param string $sql
-	 * @return bool or \PDOStatement
-	 */
-	public static function select($sql = '')
-	{
-	   self::getState();
-		
-	    if ($sql){
-	        try {
-		        $stmt = self::$_state->prepare($sql);
-			    $stmt->execute();
-		        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
-	        } catch (\PDOException $e) {
-		        new BaseException($e->getMessage());
-	        }
-        }
-        return false;
-    }
 
     public static function prepare($sql = '')
 	{
@@ -89,10 +68,23 @@ class DB {
     public static function execute(array $params = null)
     {
 	    if ($params) {
-		   self::$_stmt->execute($params);
+		  return self::$_stmt->execute($params);
 	    } else {
 		    self::$_stmt->execute();
+			return self::$_stmt->fetchAll(\PDO::FETCH_ASSOC);
 	    }
-	    return self::$_stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    }
+	
+	public static function select(array $params = null)
+    {
+		  	 self::$_stmt->execute($params);
+			return self::$_stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+	
+	
+	public static function insert(array $params = null)
+    {
+		  return self::$_stmt->execute($params);
     }
 }

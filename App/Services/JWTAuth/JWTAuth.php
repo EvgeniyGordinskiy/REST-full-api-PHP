@@ -30,15 +30,15 @@ class JWTAuth
 	 * Create new private key.
 	 * @return resource
 	 */
-	public static function create_private_token() :resource
+	public static function create_private_token()
 	{
 		$config = array(
 			'digest_alg' => 'sha2',
 			'private_key_bits' => 2048,
 			'private_key_type' => OPENSSL_KEYTYPE_RSA,
 		);
-		$private_token = openssl_pkey_new($config);
-
+		$res = openssl_pkey_new($config);
+		openssl_pkey_export($res, $private_token);
 		return $private_token;
 	}
 	
@@ -51,8 +51,11 @@ class JWTAuth
 		$resource = openssl_pkey_get_private($private_token);
 
 		$public_token = openssl_pkey_get_details($resource);
-
-		return $public_token;
+		if($public_token) {
+			return $public_token['key'];
+		}else{
+			return false;
+		}
 	}
 
 	/**
@@ -74,7 +77,7 @@ class JWTAuth
 	 * @param null $head
 	 * @return string
 	 */
-	public function encode($alg = 'RS256', $private_token, $keyId = null, $head = null) :string
+	public function encode($private_token,$alg = 'RS256', $keyId = null, $head = null) :string
 	{
 		$token = $this->jwt->encode($this->payload, $private_token, $alg, $keyId, $head) ;
 		if ( !$token ) {

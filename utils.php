@@ -1,10 +1,12 @@
 <?php
 
 function dd ($var = false) {
+	$respone = new App\Services\Http\Response\Response();
+	$respone->setStatusCode(500);
 	if (!is_string($var)) {
-		(new App\Services\Http\Response\Response())->send(json_encode($var));
+		$respone->send(json_encode($var));
 	}else{
-		(new App\Services\Http\Response\Response())->send($var);
+		$respone->send($var);
 	}
 	exit();
 }

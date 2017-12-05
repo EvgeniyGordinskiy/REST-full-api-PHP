@@ -11,7 +11,6 @@ set_error_handler(function( $num, $str, $file, $line, $context ) {
 	if ($num === 8 || $num === 2) {
 		new Log(false, $str, $file, $line);
 	}
-
 	(new \App\Services\Http\Response\Response())->setStatusCode(500);
 	return false;
 });

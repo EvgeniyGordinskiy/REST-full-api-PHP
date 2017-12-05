@@ -9,18 +9,28 @@ class AuthController extends BaseController
 {
 	public function index (string $email, string $password)
 	{
-		if ($user = AuthModel::checkUser($email, $password)) {
+		if ($user = AuthModel::login($email, $password)) {
 				$this->send(['user' => $user]);
 		}
 		$this->sendWithError(401);
 	}
 
-
+	/**
+	 *  Register new user
+	 * 
+	 * @param string $name
+	 * @param string $email
+	 * @param string $password
+	 */
 	public function post (string $name, string $email, string $password)
 	{
+		session_start();
+		dd($_SESSION);
+
 		$register = AuthModel::register($name, $email, $password);
 		if ($register) {
 			$user = $this->index($email, $password);
+			$this->send($user);
 		}
 		$this->sendWithError(401);
 	}

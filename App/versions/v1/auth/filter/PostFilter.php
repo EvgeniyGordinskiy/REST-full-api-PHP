@@ -20,7 +20,7 @@ class PostFilter implements IFilter
             if($length_name < 3) {
                 throw new FilterException('The name must consist of at least 3 letters');
             }
-            if($length_name < 50) {
+            if($length_name > 50) {
                 throw new FilterException('Maximum name length is 50 letters');
             }
         } else {
@@ -29,7 +29,7 @@ class PostFilter implements IFilter
         if ( isset($parameters['password']) && is_string($parameters['password'])) {
 
             if (isset($parameters['confirm_password']) && is_string($parameters['confirm_password'])) {
-                if ( strcasecmp($parameters['confirm_password'],$parameters['password']) ) {
+                if ( strcasecmp($parameters['confirm_password'],$parameters['password']) == 0 ) {
                     $length_password = mb_strlen($parameters['password'], 'UTF8');
                     if ($length_password < 6) {
                         throw new FilterException('The password must consist of at least 3 letters');
