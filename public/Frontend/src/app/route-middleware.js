@@ -11,15 +11,15 @@ const beforeEach = (to, from, next) => {
     /**
      * Authenticated routes.
      */
-    if (to.matched.some(record => record.meta.auth)) {
+    if (to.matched.some(record => record.meta.guest)) {
         /**
          * If user is not authenticated, redirect to home.
          */
-        if (!store.state.auth.authenticated) {
-            return next({
-                path: '/login',
-            });
-        }
+        // if (!store.state.auth.authenticated) {
+        //     return next({
+        //         path: '/login',
+        //     });
+        // }
 
         console.log(to);
     }

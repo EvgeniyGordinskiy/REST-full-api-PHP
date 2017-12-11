@@ -44,12 +44,13 @@ class AuthModel extends Model
 				$token = $jwt->encode($private_token);
 				if( self::updateUserToken($private_token, $email) ) {
 					session_start();
-					$_SESSION[$public_token] = $token;
-					$user['token'] = $public_token;
+					$key_pub_token = $jwt::create_key_for_public_token($public_token);
+					$_SESSION[$key_pub_token] = $token;
+					$user['token'] = $key_pub_token;
 					return $user;
 				}
 			}else{
-				throw new AuthException('Email or password is incorrect', 401);
+				throw new AuthException('User not found', 401);
 			}
 		return false;
 	}

@@ -49,6 +49,12 @@ class Route
 		}
 		return self::$_state;
 	}
+
+	/**
+	 *  Create array of all routes
+	 * @param $route
+	 * @param array $parent
+	 */
     private function merge_routes($route, $parent = [])
     {
 
@@ -74,25 +80,29 @@ class Route
 		    $this->parentRoute = $route;
 		    $url = $this->parentRoute['path'];
 
-			$this->routes[$url] = $this->parentRoute;
+//			$this->routes[$url] = $this->parentRoute;
 		    array_shift($this->parentChild);
 	    } elseif ( $route['path'] && $route['obj'] ) {
 
 			$this->parentRoute['path'] = $url =isset($this->parentRoute['path'])?$this->parentRoute['path'].$route['path']:$route['path'];
-			$this->parentRoute['api_path'] = isset($this->parentRoute['api_path'])?$this->parentRoute['api_path'].$route['api_path']:$route['api_path'];
 			$component = $route['component'] ?? $this->parentRoute['component'] ?? '';
 			$desc = $route['desc'] ?? '';
 			$method = $route['method'] ?? '';
 			$filter = $route['filter'] ?? '';
 			$object = $route['obj'] ?? '';
 			$version = $route['version'] ?? '';
-			$this->routes[$url] = $this->parentRoute;
+		    $path = $this->parentRoute['path'] ?? '';
+		    $permission = $this->parentRoute['permission'] ?? '';
+//			$this->routes[$url] = $this->parentRoute;
 			$this->routes[$url]['component'] = $component;
 			$this->routes[$url]['desc'] = $desc;
 			$this->routes[$url]['method'] = $method;
 			$this->routes[$url]['filter'] = $filter;
 			$this->routes[$url]['obj'] = $object;
 			$this->routes[$url]['version'] = $version;
+			$this->routes[$url]['permission'] = $permission;
+			$this->routes[$url]['path'] = $path;
+			$this->routes[$url]['api_path'] = stripslashes($path);
 		}
 
 		if ( key_exists('child', $route) ) {

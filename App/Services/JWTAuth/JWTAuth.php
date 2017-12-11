@@ -59,6 +59,15 @@ class JWTAuth
 	}
 
 	/**
+	 * Create new private key.
+	 * @return resource
+	 */
+	public static function create_key_for_public_token(string $public_token) :string
+	{
+		return md5($public_token);
+	}
+
+	/**
 	 * Create new public token and compare with current public token 
 	 * @param $private_token
 	 * @param $public_token
@@ -70,6 +79,7 @@ class JWTAuth
 
 			return strcasecmp($public_token, $pubToken);
 	}
+
 	/**
 	 * Create token
 	 * @param string $alg
