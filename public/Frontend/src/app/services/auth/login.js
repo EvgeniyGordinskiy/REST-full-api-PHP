@@ -16,9 +16,9 @@ const success = (token, resolve) => {
  * When the request fails
  */
 const failed = (error, reject) => {
-  if (error.response.data.error.length === 0) {
-    return reject({ error: ['Invalid credentials'] });
-  }
+  // if (typeof error.response.data.error !== 'undefined') {
+  //   return reject({ error: ['Invalid credentials'] });
+  // }
   return reject(error.response.data);
 };
 
@@ -29,7 +29,9 @@ export default user => (
                success(response.data._links.items.user.token, resolve);
              })
              .catch((error) => {
-                 failed(error, reject);
+               console.log(error);
+
+               failed(error, reject);
              });
   })
 );

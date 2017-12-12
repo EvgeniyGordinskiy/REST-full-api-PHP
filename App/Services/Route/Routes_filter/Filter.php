@@ -24,9 +24,6 @@ class Filter implements IRoutes_Filter
 	{
 		if ( isset($route['path']) ) {
 			$routeUrl = $route['path'];
-			if (isset($route['path']) && isset($route['obj']) ) {
-				$route['api_path'] = $routeUrl;
-			}
 			$this->validateRouteUrl($routeUrl);
 			$this->routeUrl = $route['path'] = $this->url($routeUrl);
 		} else {

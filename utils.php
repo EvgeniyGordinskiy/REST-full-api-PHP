@@ -1,13 +1,11 @@
 <?php
+use App\Traits\ResponseTrait;
 
 function dd ($var = false) {
 	$respone = new App\Services\Http\Response\Response();
 	$respone->setStatusCode(500);
-	if (!is_string($var)) {
-		$respone->send(json_encode($var));
-	}else{
-		$respone->send($var);
-	}
+	$respone->write(['error' => $var]);
+	$respone->send();
 	exit();
 }
 

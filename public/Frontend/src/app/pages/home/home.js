@@ -8,8 +8,6 @@
 import auth from './../../services/auth';
 import Forms from './../../utils/forms/forms';
 import Formvue from './../../components/form/form.vue';
-import Header from './../../components/header/header.vue';
-import LayoutV from './../../layouts/user/user.vue';
 
 export default {
     data() {
@@ -44,8 +42,5 @@ export default {
 
     components: {
         formv: Formvue,
-        headerv: Header,
-        layoutv: LayoutV,
-
     },
 };
