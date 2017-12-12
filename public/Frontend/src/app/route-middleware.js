@@ -15,6 +15,8 @@ const beforeEach = (to, from, next) => {
         /**
          * If user is not authenticated, redirect to home.
          */
+
+        store.dispatch('checkAuthentication');
         if (!store.state.auth.authenticated) {
             return next({
                 path: '/login',

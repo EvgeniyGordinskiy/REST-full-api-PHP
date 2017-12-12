@@ -24,9 +24,9 @@ const failed = (error, reject) => {
 
 export default user => (
   new Promise((resolve, reject) => {
-      Vue.$http.post('/auth', user)
+      Vue.$http.post('/auth/login', user)
              .then((response) => {
-               success(response.data._links.items.token, resolve);
+               success(response.data._links.items.user.token, resolve);
              })
              .catch((error) => {
                  failed(error, reject);

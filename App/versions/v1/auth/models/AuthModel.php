@@ -44,7 +44,7 @@ class AuthModel extends Model
 				$token = $jwt->encode($private_token);
 				if( self::updateUserToken($private_token, $email) ) {
 					session_start();
-					$_SESSION[$public_token] = $token;
+					$_SESSION[$public_token] = ['token' => $token, 'exp' => 300000];
 					$user['token'] = $public_token;
 					return $user;
 				}

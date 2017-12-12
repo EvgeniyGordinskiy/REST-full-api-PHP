@@ -24,9 +24,6 @@ class AuthController extends BaseController
 	 */
 	public function post (string $name, string $email, string $password)
 	{
-		session_start();
-		dd($_SESSION);
-
 		$register = AuthModel::register($name, $email, $password);
 		if ($register) {
 			$user = $this->index($email, $password);

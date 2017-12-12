@@ -52,7 +52,7 @@ class JWTAuth
 
 		$public_token = openssl_pkey_get_details($resource);
 		if($public_token) {
-			return $public_token['key'];
+			return md5($public_token['key']);
 		}else{
 			return false;
 		}
