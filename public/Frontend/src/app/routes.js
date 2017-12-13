@@ -48,6 +48,16 @@ export default [
       guest: true,
     },
   },
+
+     // FOrgot password page 
+  {
+    path: '/forgotPassword',
+    name: 'forgotPassword',
+    component: require('./pages/forgotPassword/forgotPassword.vue'),
+    meta: {
+      guest: true,
+    },
+  },
   // Components with the navigation wrapper.
   {
     path: '',
